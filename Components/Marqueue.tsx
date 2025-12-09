@@ -1,6 +1,4 @@
-"use client";
 
-import React from "react";
 import { FaWhatsapp } from "react-icons/fa";
 
 type Item = {
@@ -151,37 +149,35 @@ export default function Marqueue() {
           align-items: center;
         }
 
-        /* LEFT: move left->right (negative offset -> 0) */
+        
         .left-track {
           animation: move-right var(--duration, 14s) linear infinite;
           min-width: 200%;
         }
 
-        /* RIGHT: also move left->right */
+   
         .right-track {
           animation: move-right var(--duration, 12s) linear infinite;
           min-width: 200%;
         }
 
-        /* Pause on hover of parent */
         .left-parent:hover .left-track,
         .right-parent:hover .right-track {
           animation-play-state: paused;
         }
 
-        /* Keyframes: translate by one group's fraction to loop exactly one group's width.
-           Using calc(-100% / var(--groups)) ensures the shift equals one group chunk. */
+   
         @keyframes move-right {
           from { transform: translateX(calc(-100% / var(--groups))); }
           to   { transform: translateX(0%); }
         }
 
-        /* Avoid jittering when images shrink/grow */
+       
         .marquee-track img {
           flex-shrink: 0;
         }
 
-        /* Accessibility: respect reduced motion */
+     
         @media (prefers-reduced-motion: reduce) {
           .left-track, .right-track {
             animation: none !important;
@@ -189,8 +185,7 @@ export default function Marqueue() {
           }
         }
 
-        /* MOBILE: make marquee faster on small screens */
-        /* You can tweak the durations below (5s for left, 6s for right) to taste */
+       
         @media (max-width: 640px) {
           .left-track {
             animation-duration: 5s !important; /* faster on mobile */
@@ -205,16 +200,15 @@ export default function Marqueue() {
             width: 100% !important;
           }
 
-          /* Tweak spacing so items don't overflow badly */
+
           .group { gap: 10px !important; }
           .marquee-item { font-size: 0.9rem !important; }
           .right-parent .group { padding: 0.5rem 0.75rem; }
 
-          /* Adjust the absolute center button so it fits on small widths */
+        
           .absolute.top-0.left\\[30\\%] { left: 6% !important; width: auto !important; }
         }
 
-        /* Optional small visual niceties */
         .marquee-item { white-space: nowrap; }
         .group { display: flex; align-items: center; }
       `}</style>

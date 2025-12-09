@@ -2,9 +2,9 @@
 
 import React, { useRef, useEffect } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-// register plugin on client only
+
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
@@ -17,7 +17,7 @@ export default function Video() {
     if (!el) return;
 
     const ctx = gsap.context(() => {
-      // starting state
+      
       gsap.set(el, {
         y: 100,
         scale: 0.9,
@@ -26,7 +26,7 @@ export default function Video() {
         willChange: "transform, opacity, filter",
       });
 
-      // scroll-triggered entrance
+      
       gsap.to(el, {
         y: 0,
         scale: 1,

@@ -2,11 +2,12 @@
 
 import React, { useRef, useEffect } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
 import { FaWhatsapp } from "react-icons/fa";
 import { IoMdHelp } from "react-icons/io";
 
-// register only on client
+
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
@@ -20,7 +21,6 @@ export default function Need1000Section() {
     const ctx = gsap.context(() => {
       const elems = gsap.utils.toArray<HTMLElement>(".animate-in");
 
-      // main staggered entrance on scroll
       gsap.from(elems, {
         y: 48,
         opacity: 0,
@@ -36,7 +36,7 @@ export default function Need1000Section() {
         },
       });
 
-      // phone mockup — slightly richer motion
+     
       gsap.from(".phone", {
         y: 90,
         opacity: 0,
@@ -63,7 +63,7 @@ export default function Need1000Section() {
       >
         <div className="max-w-[90%] mx-auto w-full px-6 pt-10 lg:pt-[4cm] pb-5">
           <div className="flex flex-col lg:flex-row items-start gap-8 lg:gap-12">
-            {/* Left */}
+            
             <div className="w-full lg:w-1/2 flex items-start">
               <div className="w-full animate-in">
                 <h1
@@ -100,7 +100,7 @@ export default function Need1000Section() {
               </div>
             </div>
 
-            {/* Right / phone */}
+          
             <div className="w-full lg:w-1/2 flex justify-center lg:justify-end items-start animate-in">
               <div className="w-[320px] sm:w-[280px] md:w-[340px] lg:w-[10cm] p-1 lg:p-2 rounded-2xl overflow-hidden bg-white mr-10 lg:mr-[3cm] phone">
                 <img src="/Images/whatapp.png" alt="phone mockup" className="w-full h-auto block object-cover" />

@@ -81,7 +81,7 @@ const Navbar: React.FC = () => {
     if (!container || !profileEl || !linksEl || !ctaEl) return;
 
     if (prefersReduced) {
-      // Reveal everything instantly for reduced motion
+   
       container.style.opacity = "1";
       container.style.transform = "translateY(0px)";
       container.style.filter = "blur(0px)";
@@ -136,7 +136,7 @@ const Navbar: React.FC = () => {
     };
   }, []);
 
-  // animate mobile menu open/close
+
   useEffect(() => {
     const prefersReduced =
       typeof window !== "undefined" &&
@@ -173,7 +173,7 @@ const Navbar: React.FC = () => {
     }
   }, [menuOpen]);
 
-  // close on escape & prevent body scroll when open
+
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setMenuOpen(false);
@@ -199,7 +199,7 @@ const Navbar: React.FC = () => {
             <UserProfile />
           </div>
 
-          {/* Desktop links - hidden on small screens */}
+       
           <div
             ref={linksWrapRef}
             className="hidden md:flex md:items-center md:justify-center md:flex-1"
@@ -209,7 +209,7 @@ const Navbar: React.FC = () => {
           </div>
 
           <div className="flex items-center gap-2">
-            {/* CTA - visible on md and up */}
+    
             <div ref={ctaWrapRef} className="hidden md:block">
               <button
                 className="py-2 px-3 pr-5 gap-2 hover:scale-[1.03] flex justify-center items-center bg-green-500 text-white text-lg rounded-2xl shadow-inner shadow-green-200 border border-b-4 border-green-600 hover:bg-green-600/90 cursor-pointer transition duration-300"
@@ -237,7 +237,7 @@ const Navbar: React.FC = () => {
           </div>
         </div>
 
-        {/* Mobile menu - rendered after nav to avoid covering it */}
+        {/* Mobile menu */}
         <div
           ref={mobileMenuRef}
           id="mobile-menu"

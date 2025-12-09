@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useRef, useEffect } from "react";
+import  { useRef, useEffect } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
 import { FaWhatsapp } from "react-icons/fa";
 
 if (typeof window !== "undefined") {
@@ -19,7 +20,7 @@ export default function CTA() {
     const ctx = gsap.context(() => {
       const items = gsap.utils.toArray<HTMLElement>(".cta-animate");
 
-      // initial state
+     
       gsap.set(items, {
         y: 60,
         scale: 0.95,
@@ -28,7 +29,7 @@ export default function CTA() {
         willChange: "transform, opacity, filter",
       });
 
-      // staggered scroll reveal
+     
       gsap.to(items, {
         y: 0,
         scale: 1,
@@ -44,7 +45,7 @@ export default function CTA() {
         },
       });
 
-      // background image subtle lift
+      
       gsap.from(".cta-bg", {
         y: 80,
         opacity: 0,

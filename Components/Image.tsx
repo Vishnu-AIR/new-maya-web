@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useRef, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -16,7 +17,7 @@ export default function Image() {
     if (!el) return;
 
     const ctx = gsap.context(() => {
-      // initial state
+     
       gsap.set(el, {
         y: 80,
         scale: 0.9,
@@ -25,7 +26,7 @@ export default function Image() {
         willChange: "transform, opacity, filter",
       });
 
-      // scroll-triggered reveal
+    
       gsap.to(el, {
         y: 0,
         scale: 1,
