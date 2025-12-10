@@ -1,7 +1,5 @@
 @import "tailwindcss";
 
-
-
 @font-face {
   font-family: "SFPRODISPLAYREGULAR";
   src: url("/Font/SFPRODISPLAYREGULAR.OTF") format("opentype");
@@ -11,10 +9,21 @@
 
 @font-face {
   font-family: "Fontspring";
-  src: url("/Font/Fontspring-DEMO-P22MackinacProMedium.otf")
-    format("opentype");
+  src: url("/Font/Fontspring-DEMO-P22MackinacProMedium.otf") format("opentype");
   font-weight: normal;
   font-style: normal;
 }
 
+@font-face {
+  font-family: "EBGaramond";
+  src: url("/Fonts/EBGaramond-Regular.ttf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
 
+@font-face {
+  font-family: "Figtree";
+  src: url("/Fonts/Figtree.ttf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}

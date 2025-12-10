@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import Marqueue from "./Marqueue";
@@ -136,7 +135,7 @@ export default function HeroSection() {
   }, []);
 
   return (
-    <section className="relative min-h-[66vh] sm:min-h-[75vh] lg:min-h-[80vh] flex items-start justify-center overflow-hidden ">
+    <section className="relative min-h-[40vh] sm:min-h-[75vh] lg:min-h-[80vh] flex items-start justify-center overflow-hidden ">
       <div
         className="hidden lg:flex absolute inset-0 items-center justify-center pointer-events-none"
         aria-hidden="true"
@@ -147,12 +146,12 @@ export default function HeroSection() {
       </div>
 
       <div
-        style={{ fontFamily: "Fontspring" }}
+        style={{ fontFamily: "EBGaramon" }}
         className="relative z-10 w-full max-w-4xl mx-auto text-center pt-24 sm:pt-28 md:pt-32 lg:pt-36"
       >
         <h1
           ref={headingRef}
-          className="text-3xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl leading-tight max-w-3xl mx-auto"
+          className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl leading-tight max-w-3xl mx-auto"
         >
           <span className="inline-block text-orange-600 px-3 py-1 rounded-xl bg-[#FFE5C0]">
             Your Profile

@@ -1,5 +1,4 @@
-
-import { FaWhatsapp } from "react-icons/fa";
+import VoiceButton from "./VoiceButton";
 
 type Item = {
   img: string;
@@ -11,8 +10,8 @@ export default function Marqueue() {
     "I Am A Backend Dev",
     "I Am A Designer",
     "I Am A FreeLancer ",
-    "I Ship Clean Code",
-    "Open To Freelance & Jobs",
+    "I Am A Frontend Dev",
+    "I Am A Full Stack Dev ",
   ];
 
   const rightItems: Item[] = [
@@ -29,8 +28,8 @@ export default function Marqueue() {
       text: "I Got 20k Internship",
     },
     {
-      img: "https://images.unsplash.com/photo-1545996124-0b2d7a0d9d0f?w=600&auto=format&fit=crop&q=60",
-      text: "Launched First Product",
+      img: "https://plus.unsplash.com/premium_photo-1678197937465-bdbc4ed95815?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8cGVyc29ufGVufDB8fDB8fHww",
+      text: "I New Cient",
     },
     {
       img: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=600&auto=format&fit=crop&q=60",
@@ -126,16 +125,8 @@ export default function Marqueue() {
         </div>
       </div>
 
-      <div className="absolute top-0 left-[30%] lg:left-[43%] w-[6cm] h-full rounded-2xl flex items-center">
-        <button
-          className="py-2 px-2 pr-5 gap-2 hover:scale-[1.03] flex justify-center items-center bg-green-500 text-white text-xl rounded-2xl shadow-inner shadow-green-200 border border-b-4 border-green-600 hover:bg-green-700 hover:border-green-800 cursor-pointer transition duration-300"
-          aria-label="Try now"
-        >
-          <span className="text-[#EDE3D8] p-px rounded-md">
-            <FaWhatsapp size={30} />
-          </span>
-          Say hi to Maya
-        </button>
+      <div className="absolute top-0 left-[35%] lg:left-[45%] w-[6cm] h-full  flex items-center">
+        <VoiceButton/>
       </div>
 
       <style>{`
@@ -195,7 +186,7 @@ export default function Marqueue() {
             animation-duration: 6s !important; /* slightly slower than left */
           }
 
-          /* Make parents full width on mobile for better layout */
+         
           .left-parent, .right-parent {
             width: 100% !important;
           }

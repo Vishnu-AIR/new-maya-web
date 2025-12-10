@@ -1,11 +1,11 @@
 "use client";
-
-import React, { useRef, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import { FaWhatsapp } from "react-icons/fa";
 import { IoMdHelp } from "react-icons/io";
+import WhatsAppChatPhone from "./Phone";
 
 
 if (typeof window !== "undefined") {
@@ -102,9 +102,7 @@ export default function Need1000Section() {
 
           
             <div className="w-full lg:w-1/2 flex justify-center lg:justify-end items-start animate-in">
-              <div className="w-[320px] sm:w-[280px] md:w-[340px] lg:w-[10cm] p-1 lg:p-2 rounded-2xl overflow-hidden bg-white mr-10 lg:mr-[3cm] phone">
-                <img src="/Images/whatapp.png" alt="phone mockup" className="w-full h-auto block object-cover" />
-              </div>
+             <WhatsAppChatPhone/>
             </div>
           </div>
         </div>

@@ -1,9 +1,7 @@
 "use client";
-
 import  { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-
 import { FaWhatsapp } from "react-icons/fa";
 
 if (typeof window !== "undefined") {
