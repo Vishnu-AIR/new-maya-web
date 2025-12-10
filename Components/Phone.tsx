@@ -206,7 +206,7 @@ export default function WhatsAppChatPhone() {
                         resolversRef.current[idx] = undefined as any;
                       }
                     }}
-                    className={`message max-w-[78%] break-words whitespace-pre-line p-3 rounded-xl text-sm leading-snug shadow-sm self-${
+                    className={`message max-w-[78%] wrap-break-word whitespace-pre-line p-3 rounded-xl text-sm leading-snug shadow-sm self-${
                       m.side === "right" ? "end" : "start"
                     }`}
                   >
