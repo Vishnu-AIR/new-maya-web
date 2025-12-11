@@ -57,7 +57,7 @@ export default function Marqueue() {
             {items.map((t, i) => (
               <span
                 key={`a-${i}`}
-                className="marquee-item px-3 py-1 text-md font-medium"
+                className="marquee-item px-3 py-1 text-xl font-medium"
               >
                 {t}
               </span>
@@ -68,7 +68,7 @@ export default function Marqueue() {
             {items.map((t, i) => (
               <span
                 key={`b-${i}`}
-                className="marquee-item px-3 py-1 text-md font-medium"
+                className="marquee-item px-3 py-1 text-xl font-medium"
               >
                 {t}
               </span>
@@ -79,7 +79,7 @@ export default function Marqueue() {
             {items.map((t, i) => (
               <span
                 key={`c-${i}`}
-                className="marquee-item px-3 py-1 text-md font-medium"
+                className="marquee-item px-3 py-1 text-xl font-medium"
               >
                 {t}
               </span>
@@ -125,7 +125,7 @@ export default function Marqueue() {
         </div>
       </div>
 
-      <div className="absolute top-0 left-[35%] lg:left-[45%] w-[6cm] h-full  flex items-center">
+      <div className="absolute top-0 left-[35%] lg:left-[46%] w-[6cm] h-full  flex items-center">
         <VoiceButton />
       </div>
 

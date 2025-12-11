@@ -2,12 +2,12 @@ export default function VoiceWaveButton() {
   return (
     <>
       <button
-        className="flex items-center justify-center  w-[3.3cm] h-14 rounded-full border-2 cursor-pointer transition-transform duration-200 hover:scale-[1.04]"
+        className="flex items-center justify-center  w-[3.3cm] h-14 rounded-full border-4 cursor-pointer transition-transform duration-200 hover:scale-[1.04]"
         aria-label="Voice wave"
         style={{
-          background: "#ffd7c8", 
-          borderColor: "#ff6a00", 
-          color: "#ff5000", 
+          background: "#ffd7c8",
+          borderColor: "#FF5100",
+          color: "#ff5000",
         }}
       >
         {/* Sound-wave */}
@@ -18,7 +18,6 @@ export default function VoiceWaveButton() {
           xmlns="http://www.w3.org/2000/svg"
           aria-hidden="true"
         >
-      
           <rect
             x="6"
             y="16"
@@ -28,7 +27,7 @@ export default function VoiceWaveButton() {
             fill="currentColor"
             className="wave wave-1"
           />
-   
+
           <rect
             x="24"
             y="10"
@@ -38,7 +37,7 @@ export default function VoiceWaveButton() {
             fill="currentColor"
             className="wave wave-2"
           />
-    
+
           <rect
             x="46"
             y="6"
@@ -58,7 +57,7 @@ export default function VoiceWaveButton() {
             fill="currentColor"
             className="wave wave-4"
           />
-    
+
           <rect
             x="90"
             y="16"
@@ -68,7 +67,7 @@ export default function VoiceWaveButton() {
             fill="currentColor"
             className="wave wave-5"
           />
-  
+
           <rect
             x="106"
             y="18"
@@ -127,7 +126,7 @@ export default function VoiceWaveButton() {
 
        
         @media (prefers-reduced-motion: reduce) {
-          .wave, .wave-dot {
+          .wave, .wave-dot {  
             animation: none !important;
             transform: none !important;
           }

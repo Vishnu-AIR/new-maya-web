@@ -7,7 +7,14 @@ type Message = {
   id: number;
   side: Side;
   text: string;
-  time: string;
+  time?: string;
+};
+
+type Conversation = {
+  id: string;
+  name: string;
+
+  messages: Message[];
 };
 
 const LoadingBubble = React.forwardRef<HTMLDivElement, { side: Side }>(
@@ -54,33 +61,76 @@ export default function WhatsAppChatPhone() {
   const [showTyping, setShowTyping] = useState(false);
   const [typingSide, setTypingSide] = useState<Side>("left");
   const [visibleCount, setVisibleCount] = useState(0);
+  const [currentConvIdx, setCurrentConvIdx] = useState(0);
 
-  const messages: Message[] = [
-    { id: 1, side: "right", text: "Hey Maya", time: "3:34 PM" },
+  const conversations: Conversation[] = [
     {
-      id: 2,
-      side: "right",
-      text: "I'm Ankur - Founder of CirclePe Really need to hire a back end developer ASAP",
-      time: "3:36 PM",
+      id: "conv-1",
+      name: "Ankur",
+
+      messages: [
+        { id: 1, side: "right", text: "Hi Maya" },
+        {
+          id: 2,
+          side: "right",
+          text: "I'm Ankur - Founder of CirclePe. Need to hire a back-end developer ASAP",
+        },
+        {
+          id: 3,
+          side: "left",
+          text: "Got it — I can help. I know a few folks.",
+        },
+      ],
     },
     {
-      id: 3,
-      side: "right",
-      text: "Budget is around 15-20LPA, and the role is based out of gurgaon",
-      time: "3:36 PM",
+      id: "conv-2",
+      name: "Priya",
+
+      messages: [
+        {
+          id: 1,
+          side: "right",
+          text: "Hey Maya, I just applied — here is my resume.",
+        },
+        { id: 2, side: "right", text: "Resume: Priya_SDE.pdf" },
+        {
+          id: 3,
+          side: "left",
+          text: "Thanks Priya — I received your resume. There's a founder looking for SDEs right now.",
+        },
+        { id: 4, side: "left", text: "I'll share your profile." },
+      ],
     },
-    { id: 4, side: "left", text: "Okay got it 👍", time: "3:36 PM" },
     {
-      id: 5,
-      side: "left",
-      text: "I think I know a few folks who'd be perfect for this",
-      time: "3:36 PM",
+      id: "conv-3",
+      name: "Rohan",
+
+      messages: [
+        { id: 1, side: "right", text: "Hi — Is there any remote role?" },
+        { id: 2, side: "right", text: "I have 3 years Node.js experience." },
+        {
+          id: 3,
+          side: "left",
+          text: "Nice — remote roles exist. There's a backend opening in Gurgaon, 15-20 LPA.",
+        },
+      ],
     },
     {
-      id: 6,
-      side: "left",
-      text: "Let me talk to them & get back to you",
-      time: "3:37 PM",
+      id: "conv-4",
+      name: "Sana",
+
+      messages: [
+        {
+          id: 1,
+          side: "right",
+          text: "Maya, can you shortlist people for ML roles?",
+        },
+        {
+          id: 2,
+          side: "left",
+          text: "Yes — share the JD and I'll scan my network.",
+        },
+      ],
     },
   ];
 
@@ -89,9 +139,8 @@ export default function WhatsAppChatPhone() {
 
   useEffect(() => {
     cancelledRef.current = false;
-
-    const container = wrapRef.current;
-    if (!container) return;
+    const conv = conversations[currentConvIdx];
+    setVisibleCount(0);
 
     const sleep = (ms: number) =>
       new Promise((res) => {
@@ -99,16 +148,14 @@ export default function WhatsAppChatPhone() {
       });
 
     (async () => {
-      for (let i = 0; i < messages.length; i++) {
+      for (let i = 0; i < conv.messages.length; i++) {
         if (cancelledRef.current) break;
 
-        setTypingSide(messages[i].side === "right" ? "right" : "left");
+        setTypingSide(conv.messages[i].side === "right" ? "right" : "left");
         setShowTyping(true);
 
-        await sleep(60);
-        if (cancelledRef.current) break;
-
-        await sleep(1000);
+        const len = conv.messages[i].text?.length || 20;
+        await sleep(80 + Math.min(1200, len * 20));
         if (cancelledRef.current) break;
 
         setShowTyping(false);
@@ -118,20 +165,22 @@ export default function WhatsAppChatPhone() {
           setVisibleCount((v) => v + 1);
         });
 
-        await sleep(40);
-
-        await sleep(120);
+        await sleep(160);
       }
 
       setShowTyping(false);
+
+      if (!cancelledRef.current) {
+        await sleep(1200);
+        setCurrentConvIdx((s) => (s + 1) % conversations.length);
+      }
     })();
 
     return () => {
       cancelledRef.current = true;
-
       resolversRef.current = [];
     };
-  }, []);
+  }, [currentConvIdx]);
 
   const msgVariants = {
     hidden: (side: Side) => ({
@@ -142,6 +191,8 @@ export default function WhatsAppChatPhone() {
     }),
     visible: { opacity: 1, y: 0, x: 0, scale: 1 },
   };
+
+  const conv = conversations[currentConvIdx];
 
   return (
     <div className=" flex items-center justify-center p-1 bg-white rounded-3xl">
@@ -165,11 +216,11 @@ export default function WhatsAppChatPhone() {
               className="flex-1 overflow-auto p-4 flex flex-col gap-3"
               style={{ paddingBottom: 12 }}
             >
-              {messages.map((m, idx) => {
+              {conv.messages.map((m, idx) => {
                 const isVisible = idx < visibleCount;
                 return (
                   <motion.div
-                    key={m.id}
+                    key={`${conv.id}-${m.id}`}
                     data-side={m.side}
                     data-id={m.id}
                     custom={m.side}
@@ -183,7 +234,6 @@ export default function WhatsAppChatPhone() {
                         typeof resolversRef.current[idx] === "function"
                       ) {
                         resolversRef.current[idx]();
-
                         resolversRef.current[idx] = undefined as any;
                       }
                     }}

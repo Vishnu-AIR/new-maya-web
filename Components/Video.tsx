@@ -48,12 +48,12 @@ export default function Video() {
     <div className="w-full flex justify-center items-center">
       <section
         ref={wrapperRef}
-        className="w-full p-4 rounded-2xl overflow-hidden"
+        className="w-full   overflow-hidden"
         aria-label="Hero video"
       >
-        <div className="w-full h-[48vh] sm:h-[56vh] md:h-[70vh] lg:h-[80vh] rounded-xl overflow-hidden">
+        <div className="w-full h-[48vh] sm:h-[56vh] md:h-[70vh] lg:h-[80vh]  overflow-hidden">
           <video
-            className="w-full h-full object-cover rounded-xl"
+            className="w-full h-full object-cover "
             muted
             loop
             autoPlay

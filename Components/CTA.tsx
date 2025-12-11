@@ -1,8 +1,9 @@
 "use client";
-import  { useRef, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { FaWhatsapp } from "react-icons/fa";
+
+import { GoArrowRight } from "react-icons/go";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -18,7 +19,6 @@ export default function CTA() {
     const ctx = gsap.context(() => {
       const items = gsap.utils.toArray<HTMLElement>(".cta-animate");
 
-     
       gsap.set(items, {
         y: 60,
         scale: 0.95,
@@ -27,7 +27,6 @@ export default function CTA() {
         willChange: "transform, opacity, filter",
       });
 
-     
       gsap.to(items, {
         y: 0,
         scale: 1,
@@ -43,7 +42,6 @@ export default function CTA() {
         },
       });
 
-      
       gsap.from(".cta-bg", {
         y: 80,
         opacity: 0,
@@ -61,13 +59,16 @@ export default function CTA() {
   }, []);
 
   return (
-    <section ref={wrapperRef} className="relative w-full overflow-hidden bg-[#F1CBA4]">
+    <section
+      ref={wrapperRef}
+      className="relative w-full overflow-hidden bg-[#F1CBA4]"
+    >
       <div className="relative z-10 max-w-6xl mx-auto text-center mt-20 px-4">
         <h2
-          style={{ fontFamily: "Fontspring" }}
+          style={{ fontFamily: "DavidLibre" }}
           className="cta-animate text-4xl lg:text-6xl text-[#25170D] leading-tight"
         >
-          Just Say <span className="text-orange-500">Hey</span> To{' '}
+          Just Say <span className="text-orange-500">Hey</span> To{" "}
           <span>Maya</span>
           <br className="hidden md:block" />
           <span className="block md:inline"> On WhatsApp</span>
@@ -75,13 +76,13 @@ export default function CTA() {
 
         <div className="cta-animate mt-8 w-full flex justify-center items-center">
           <button
-            className="py-2 px-3 sm:px-5 gap-2 hover:scale-[1.03] flex justify-center items-center bg-green-500 text-white text-lg sm:text-xl rounded-2xl shadow-inner shadow-green-200 border border-b-4 border-green-600 hover:bg-green-600/90 transition duration-300"
+            className="py-2 italic px-3 sm:px-5 gap-2 hover:scale-[1.03] flex justify-center items-center bg-white text-black text-lg sm:text-xl rounded-full  border border-b-4 border-r-2 border-black  transition-all duration-300"
             aria-label="Try now"
           >
-            <span className="text-[#EDE3D8] p-px rounded-md">
-              <FaWhatsapp className="size-8" />
+            "Hey Maya"
+            <span className=" p-px rounded-md">
+              <GoArrowRight />
             </span>
-            Hey Maya
           </button>
         </div>
       </div>

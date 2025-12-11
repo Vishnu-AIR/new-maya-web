@@ -2,13 +2,17 @@
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { FaWhatsapp } from "react-icons/fa";
+
 import { IoMdHelp } from "react-icons/io";
 import { FiMenu, FiX } from "react-icons/fi";
 import gsap from "gsap";
 
 const UserProfile = () => (
-  <Link href="/" className="flex items-center space-x-3 focus:outline-none" aria-label="Home">
+  <Link
+    href="/"
+    className="flex items-center space-x-3 focus:outline-none"
+    aria-label="Home"
+  >
     <div className="w-12 h-12 relative overflow-hidden rounded-full">
       <Image
         src="/Images/maya.png"
@@ -21,8 +25,8 @@ const UserProfile = () => (
     </div>
 
     <span
-      style={{ fontFamily: "Fontspring" }}
-      className="text-xl md:text-3xl text-orange-400 font-semibold"
+      style={{ fontFamily: "DavidLibre" }}
+      className="text-xl md:text-3xl text-[#F54A00] "
       aria-label="User name"
     >
       Maya
@@ -32,9 +36,9 @@ const UserProfile = () => (
 
 const NavLinks = ({ isMobile = false }: { isMobile?: boolean }) => (
   <div
-    className={
-      `flex ${isMobile ? "flex-col space-y-4" : "items-center space-x-8"} text-md font-medium`
-    }
+    className={`flex ${
+      isMobile ? "flex-col space-y-4" : "items-center space-x-8"
+    } text-md font-medium`}
   >
     <button
       type="button"
@@ -42,7 +46,7 @@ const NavLinks = ({ isMobile = false }: { isMobile?: boolean }) => (
       aria-label="Need a freelancer?"
     >
       <span className="text-[#25170D]">Need A Freelancer</span>
-      <IoMdHelp className="text-orange-400" aria-hidden="true" />
+      <IoMdHelp className="text-[#F54A00]" aria-hidden="true" />
     </button>
 
     <button
@@ -51,7 +55,7 @@ const NavLinks = ({ isMobile = false }: { isMobile?: boolean }) => (
       aria-label="Are you hiring?"
     >
       <span className="text-[#25170D]">Are You Hiring</span>
-      <IoMdHelp className="text-orange-400" aria-hidden="true" />
+      <IoMdHelp className="text-[#F54A00]" aria-hidden="true" />
     </button>
   </div>
 );
@@ -80,7 +84,6 @@ const Navbar: React.FC = () => {
     if (!container || !profileEl || !linksEl || !ctaEl) return;
 
     if (prefersReduced) {
-   
       container.style.opacity = "1";
       container.style.transform = "translateY(0px)";
       container.style.filter = "blur(0px)";
@@ -100,13 +103,26 @@ const Navbar: React.FC = () => {
     tlRef.current.fromTo(
       container,
       { y: -100, opacity: 0, filter: "blur(18px)" },
-      { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.9, ease: "power3.out" }
+      {
+        y: 0,
+        opacity: 1,
+        filter: "blur(0px)",
+        duration: 0.9,
+        ease: "power3.out",
+      }
     );
 
     tlRef.current.fromTo(
       profileEl,
       { x: -18, y: -6, opacity: 0, filter: "blur(10px)" },
-      { x: 0, y: 0, opacity: 1, filter: "blur(0px)", duration: 0.6, ease: "power2.out" },
+      {
+        x: 0,
+        y: 0,
+        opacity: 1,
+        filter: "blur(0px)",
+        duration: 0.6,
+        ease: "power2.out",
+      },
       "<0.06"
     );
 
@@ -114,14 +130,27 @@ const Navbar: React.FC = () => {
     tlRef.current.fromTo(
       linkChildren,
       { y: -28, opacity: 0, filter: "blur(8px)" },
-      { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.55, stagger: 0.08, ease: "power2.out" },
+      {
+        y: 0,
+        opacity: 1,
+        filter: "blur(0px)",
+        duration: 0.55,
+        stagger: 0.08,
+        ease: "power2.out",
+      },
       "<0.08"
     );
 
     tlRef.current.fromTo(
       ctaEl,
       { scale: 0.96, opacity: 0, filter: "blur(6px)" },
-      { scale: 1, opacity: 1, filter: "blur(0px)", duration: 0.7, ease: "back.out(1.1)" },
+      {
+        scale: 1,
+        opacity: 1,
+        filter: "blur(0px)",
+        duration: 0.7,
+        ease: "back.out(1.1)",
+      },
       "<0.06"
     );
 
@@ -134,7 +163,6 @@ const Navbar: React.FC = () => {
       gsap.set([container, profileEl, linksEl, ctaEl], { willChange: "" });
     };
   }, []);
-
 
   useEffect(() => {
     const prefersReduced =
@@ -156,7 +184,13 @@ const Navbar: React.FC = () => {
       gsap.fromTo(
         menu,
         { y: -12, opacity: 0, filter: "blur(6px)" },
-        { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.28, ease: "power2.out" }
+        {
+          y: 0,
+          opacity: 1,
+          filter: "blur(0px)",
+          duration: 0.28,
+          ease: "power2.out",
+        }
       );
     } else {
       gsap.to(menu, {
@@ -166,12 +200,12 @@ const Navbar: React.FC = () => {
         duration: 0.22,
         ease: "power2.in",
         onComplete: () => {
-          if (mobileMenuRef.current) mobileMenuRef.current.style.display = "none";
+          if (mobileMenuRef.current)
+            mobileMenuRef.current.style.display = "none";
         },
       });
     }
   }, [menuOpen]);
-
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -189,38 +223,24 @@ const Navbar: React.FC = () => {
 
   return (
     <nav className="w-full" role="navigation" aria-label="Main navigation">
-      <div className="max-w-3xl mx-auto py-4 px-4 md:px-0">
+      <div className="max-w-xl mx-auto py-4 px-4 md:px-0">
         <div
           ref={containerRef}
-          className="flex items-center justify-between p-2 pl-4 bg-[#FFF4EC] border border-b-4 border-[#25170D] rounded-2xl relative"
+          className="  w-full  flex items-center justify-between p-2 bg-[#FFF4EC] border border-b-4 border-[#25170D] rounded-2xl relative"
         >
           <div ref={profileWrapRef} className="shrink-0">
             <UserProfile />
           </div>
 
-       
           <div
             ref={linksWrapRef}
-            className="hidden md:flex md:items-center md:justify-center md:flex-1"
+            className="hidden md:flex md:items-end md:justify-end "
             aria-hidden={menuOpen}
           >
             <NavLinks />
           </div>
 
-          <div className="flex items-center gap-2">
-    
-            <div ref={ctaWrapRef} className="hidden md:block">
-              <button
-                className="py-2 px-3 pr-5 gap-2 hover:scale-[1.03] flex justify-center items-center bg-green-500 text-white text-lg rounded-2xl shadow-inner shadow-green-200 border border-b-4 border-green-600 hover:bg-green-600/90 cursor-pointer transition duration-300"
-                aria-label="Try now"
-              >
-                <span className="text-[#EDE3D8] p-px rounded-md">
-                  <FaWhatsapp size={22} />
-                </span>
-                <span className="hidden sm:inline">Try now</span>
-              </button>
-            </div>
-
+          <div className=" md:hidden flex items-center gap-2">
             {/* Mobile hamburger */}
             <div className="md:hidden flex items-center">
               <button
@@ -244,16 +264,6 @@ const Navbar: React.FC = () => {
           style={{ display: "none" }}
         >
           <NavLinks isMobile />
-
-          <div className="mt-4">
-            <button
-              className="w-full py-3 flex items-center justify-center gap-2 bg-green-500 text-white rounded-2xl border border-b-4 border-green-600 shadow-inner shadow-green-200"
-              aria-label="Try now mobile"
-            >
-              <FaWhatsapp />
-              <span>Try now</span>
-            </button>
-          </div>
         </div>
       </div>
     </nav>
