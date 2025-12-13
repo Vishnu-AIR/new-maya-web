@@ -1,20 +1,22 @@
 "use client";
 import { useRef, useEffect } from "react";
+// Assuming you still want the GSAP animations from the original CTA
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-import { GoArrowRight } from "react-icons/go";
-import { SlPaperClip } from "react-icons/sl";
-import { BsEmojiSmile } from "react-icons/bs";
-import { IoSend } from "react-icons/io5";
+// Icons needed for the input field
+import { SlPaperClip } from "react-icons/sl"; // For the paper clip icon
+import { BsEmojiSmile } from "react-icons/bs"; // For the smiley icon
+import { IoSend } from "react-icons/io5"; // For the send icon (using a solid version for the green button)
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-export default function CTA() {
+export default function NewCTA() {
   const wrapperRef = useRef<HTMLDivElement | null>(null);
 
+  // Re-using the animation logic from your original CTA component
   useEffect(() => {
     const el = wrapperRef.current;
     if (!el) return;
@@ -44,46 +46,43 @@ export default function CTA() {
           toggleActions: "play none none none",
         },
       });
-
-      gsap.from(".cta-bg", {
-        y: 80,
-        opacity: 0,
-        duration: 1.1,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: el,
-          start: "top 75%",
-          toggleActions: "play none none none",
-        },
-      });
     }, wrapperRef);
 
     return () => ctx.revert();
   }, []);
 
+  // --- Utility styles based on the image ---
+  // Background color from the image: a light, slightly peachy/tannish color (#FAEBD7 is close)
+  const containerBgColor = "#FAEBD7"; 
+  // Text color (dark brown/black): #362312 is close to the headline text
+  const headlineColor = "#362312";
+  // WhatsApp green color: #25D366 (standard WhatsApp green)
+  const whatsappGreen = "#25D366";
+
   return (
-    <section ref={wrapperRef} className="relative w-full overflow-hidden">
-      <div
-        style={{
-          zIndex: 5,
-          background:
-            "linear-gradient(to bottom, rgba(255,244,236,1) 0%, rgba(241,194,139,0.60) 30%, rgba(241,180,120,0.35) 75%, rgba(243,205,160,0.8) 100%)",
-          mixBlendMode: "multiply",
-        }}
-        className="relative z-10 w-full mx-auto text-center pt-20 px-4"
-      >
+    <section 
+      ref={wrapperRef} 
+      className="relative w-full overflow-hidden flex justify-center items-center py-20 md:py-32 min-h-[300px]"
+      style={{ backgroundColor: containerBgColor }}
+    >
+      <div className="relative z-10 w-full max-w-xl mx-auto text-center px-4">
+        
+        {/* Headline Text */}
         <h2
-          style={{ fontFamily: "DavidLibre" }}
-          className="cta-animate text-4xl lg:text-6xl text-[#25170D] leading-tight font-semibold"
+          className="cta-animate text-3xl md:text-5xl font-serif leading-snug"
+          style={{ color: headlineColor, fontFamily: "serif" }} // Using generic serif as the specific font 'DavidLibre' might not be available
         >
           Just tell maya what you need
           <br />
-          <span className="block md:inline  text-green-500"> On WhatsApp</span>
+          <span className="font-bold" style={{ color: whatsappGreen }}>
+            on WhatsApp
+          </span>
         </h2>
 
         {/* Input/CTA Container */}
         <div className="cta-animate mt-10 flex justify-center items-center p-2">
-          <div className="relative flex items-center w-full max-w-lg h-14 bg-white rounded-full  border border-b-4 hover:border-b border-black">
+          <div className="relative flex items-center w-full max-w-lg h-14 bg-white rounded-full shadow-lg border border-gray-300">
+            
             {/* Left Icons: Smiley */}
             <div className="px-4 text-gray-500 text-xl flex items-center">
               <BsEmojiSmile />
@@ -105,24 +104,17 @@ export default function CTA() {
 
             {/* Send Button (Green Circle) - Note: Positioned outside the main input bar in the image */}
           </div>
-
+          
           {/* Send Button */}
           <button
-            className="ml-2 w-14 h-14 rounded-full flex justify-center items-center shadow-lg transform active:scale-95 transition-transform duration-150 bg-[#1CAB5F] border border-b-4  border-r-2 hover:border-b border-black"
+            className="ml-2 w-14 h-14 rounded-full flex justify-center items-center shadow-lg transform active:scale-95 transition-transform duration-150"
+            style={{ backgroundColor: whatsappGreen }}
             aria-label="Send message"
           >
-            <IoSend className="text-white text-2xl " />
+            <IoSend className="text-white text-2xl rotate-90" />
           </button>
         </div>
       </div>
-
-      <img
-        src="/Images/pp1.png"
-        alt="Maya background"
-        className="cta-bg w-full h-auto md:h-full object-cover object-center  relative"
-        aria-hidden
-        style={{ zIndex: 0 }}
-      />
     </section>
   );
 }

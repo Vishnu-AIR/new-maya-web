@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import { Inter, Manrope } from "next/font/google";
 import "./globals.css";
 import React from "react";
+import CTA from "@/Components/CTA";
+import Footer from "@/Components/Footer";
 
 const manrope = Manrope({
   variable: "--font-manrope",
@@ -148,6 +150,8 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         {children}
+              <CTA />
+      <Footer />
       </body>
     </html>
   );
