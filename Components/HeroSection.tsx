@@ -193,7 +193,7 @@ export default function HeroSection() {
             <br />
             <span>on</span>
             <span className="flex items-center font-medium text-green-600 text-xl lg:text-[42px] whatsapp-label">
-              WhatsApp <FaWhatsapp className="lg:size-9  lg:ml-2" />
+              WhatsApp <FaWhatsapp className="lg:size-9  " />
             </span>
           </span>
         </h1>

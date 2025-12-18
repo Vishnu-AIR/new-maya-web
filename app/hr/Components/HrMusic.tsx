@@ -151,7 +151,7 @@ const HrMusic: React.FC = () => {
       </button>
 
       {/* Waveform container: responsive heights and bar widths */}
-      <div className="flex items-end gap-[3px] h-6 sm:h-8 md:h-10  xl:h-10 flex-1 mx-3 sm:mx-4 opacity-90 overflow-hidden bg-red-400">
+      <div className="flex items-end gap-[3px] h-6 sm:h-8 md:h-10  xl:h-10 flex-1 mx-3 sm:mx-4 opacity-90 overflow-hidden ">
         {baseHeights.map((h, i) => (
           <div
             key={i}
@@ -162,7 +162,7 @@ const HrMusic: React.FC = () => {
               transformOrigin: "center bottom",
               transform: "scaleY(1)",
             }}
-            className={`bg-black rounded-full ${i % 8 === 0 ? "w-[1px] sm:w-[1px] md:w-[2px]" : "w-[1px] sm:w-[2px] md:w-[2px]"}`}
+            className={`bg-gray-400 rounded-full ${i % 8 === 0 ? "w-[1px] sm:w-[1px] md:w-[2px]" : "w-[1px] sm:w-[2px] md:w-[2px]"}`}
             aria-hidden
           />
         ))}

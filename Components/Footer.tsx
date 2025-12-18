@@ -60,8 +60,8 @@ export default function Footer() {
 
   return (
     <div
-      ref={rootRef}
-      className="bg-[#DE9F33] w-full relative flex justify-end items-end py-8 sm:py-0"
+   
+      className="bg-[#DE9F33] w-full relative flex justify-end items-end py-8 sm:py-0 "
     >
       <img
         className="footer-mascot absolute bottom-0 left-0 sm:left-[10%] md:left-[12%] lg:left-[10%] w-20 lg:w-[190px] h-auto select-none pointer-events-none"

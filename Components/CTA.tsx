@@ -62,12 +62,12 @@ export default function CTA() {
   }, []);
 
   return (
-    <section ref={wrapperRef} className="relative w-full overflow-hidden">
+    <section  className="relative w-full overflow-hidden">
       <div
         style={{
           zIndex: 5,
           background:
-            "linear-gradient(to bottom, rgba(255,244,236,1) 0%, rgba(241,194,139,0.60) 30%, rgba(241,180,120,0.35) 75%, rgba(243,205,160,0.8) 100%)",
+            "linear-gradient(to bottom, rgba(255,244,236,1) 0%, rgba(241,194,139,0.60) 30%, rgba(241,180,120,0.35) 75%, rgba(243,205,160,1) 100%)",
           mixBlendMode: "multiply",
         }}
         className="relative z-10 w-full mx-auto text-center pt-20 px-4"

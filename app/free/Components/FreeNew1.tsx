@@ -1,5 +1,4 @@
-import { Highlighter } from "@/Components/ui/highlighter";
-import React from "react";
+
 
 /**
  * Pixel‑perfect "How Maya Works" component built with TailwindCSS.
@@ -13,9 +12,8 @@ import React from "react";
  *   adjust the classNames accordingly.
  */
 
-export default function New1({
-  cvPileSrc = "/images/cv-pile.png",
-  mayaAvatarSrc = "/images/maya-avatar.png",
+export default function FreeNew1({
+
 }: {
   cvPileSrc?: string;
   mayaAvatarSrc?: string;
@@ -41,7 +39,7 @@ export default function New1({
 
               <div className=" p-6 pt-16 ">
                 <h3 className="text-lg lg:text-2xl font-semibold text-[#151515] text-center">
-                  Maya will find the right folks & talk to them on your behalf
+                 Maya will find & talk to <span className="text-[#F54A00]">1000+</span> freelancers on your behalf
                 </h3>
               </div>
             </div>
@@ -58,7 +56,7 @@ export default function New1({
               {/* Card with shadow and border */}
               <div className="flex justify-start items-start h-[20vh] rounded-lg border-[2px] border-[#1f1f1f]  relative">
              <img
-                className="w-[8cm] h-[8cm] object-contain  absolute top-[-120%] left-[-20%]"
+                className="w-[8cm] h-[8cm] object-contain  absolute top-[-120%] right-[-20%]"
                 src="/Images/Illustration - Social Distancing.png"
                 alt="cv pile"
               />
