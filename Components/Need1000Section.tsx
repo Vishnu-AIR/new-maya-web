@@ -60,10 +60,10 @@ export default function Need1000Section() {
         aria-label="Maya on WhatsApp — Need freelancers"
       >
         <div className="lg:w-[86%] mx-auto w-full px-6 py-5 pb-5">
-          <div className="flex flex-col lg:flex-row items-start gap-8 lg:gap-12">
+          <div className="flex flex-col lg:flex-row items-start ">
             <div
               style={{ fontFamily: "DavidLibre" }}
-              className="w-full lg:w-1/2 flex justify-end items-end pt-0  pl-0 lg:pl-[1cm]"
+              className="w-full lg:w-1/2 flex justify-end items-end pt-4  pl-4 lg:pl-[1cm]"
             >
               <div className="w-full animate-in">
                 <h1 className="leading-none text-5xl lg:text-8xl animate-in">
@@ -73,10 +73,10 @@ export default function Need1000Section() {
 
                 <div className="animate-in text-lg lg:text-3xl">
                   <span className=""> Of</span>
-                  <span className=" lg:text-4xl ml-2 text-white ">
+                  <span className=" lg:text-4xl ml-2 text-white bg-[#4E2D00] ">
                     <Highlighter action="highlight" color="#4e2D00">
-                      HRs, Founders & Paying Clien
-                      <span className="bg-[#4E2D00]">ts</span>
+                      HRs, Founders & Paying Clients
+               
                     </Highlighter>{" "}
                   </span>
 
@@ -85,13 +85,13 @@ export default function Need1000Section() {
                     Hiring And Finding Freelancer
                   </p>
 
-                  <div className="flex flex-col lg:flex-row gap-3 sm:gap-4 mt-6 animate-in">
-                    <button className=" lg:w-[6cm] w-[5cm] flex items-center gap-2 px-5 py-3 hover:scale-[1.03] transition-all text-white text-base sm:text-xl rounded-full border  border-gray-300">
+                  <div className="flex  gap-3 sm:gap-4 mt-6 animate-in">
+                    <button className=" lg:w-[6cm] w-[5cm] p-3 gap-2 lg:px-5 lg:py-3 hover:scale-[1.03] transition-all text-white text-sm lg:text-xl rounded-full border  border-gray-300  flex justify-center items-center">
                       <span>Need A Freelancer</span>
                       <IoMdHelp className="text-[#F54A00]" aria-hidden="true" />
                     </button>
 
-                    <button className="  lg:w-[6cm] w-[5cm]  flex items-center gap-2 px-5 py-3 hover:scale-[1.03] transition-all text-white text-base sm:text-xl rounded-full border  border-gray-300">
+                    <button className="  lg:w-[6cm] w-[5cm] p-3  gap-2 lg:px-5 lg:py-3 hover:scale-[1.03] transition-all text-white text-sm lg:text-xl rounded-full border  border-gray-300 flex justify-center items-center">
                       <span>Are You Hiring</span>
                       <IoMdHelp className="text-[#F54A00]" aria-hidden="true" />
                     </button>
@@ -100,7 +100,7 @@ export default function Need1000Section() {
               </div>
             </div>
 
-            <div className="w-full lg:w-1/2 flex justify-center lg:justify-end items-start animate-in ">
+            <div className="w-full lg:w-1/2 flex justify-center lg:justify-end items-start animate-in mt-10 ">
               <div className="lg:absolute ">
                 <WhatsAppChatPhone />
               </div>

@@ -6,6 +6,7 @@ import Link from "next/link";
 import { IoMdHelp } from "react-icons/io";
 import { FiMenu, FiX } from "react-icons/fi";
 import gsap from "gsap";
+import { GoArrowRight } from "react-icons/go";
 
 const UserProfile = () => (
   <Link
@@ -39,28 +40,27 @@ const NavLinks = ({ isMobile = false }: { isMobile?: boolean }) => (
     className={`flex ${
       isMobile ? "flex-col space-y-4" : "items-center space-x-8"
     } text-md font-medium`}
-  ><Link href="/free"  >
-    <button
-      type="button"
-      className="flex items-center gap-1 cursor-pointer"
-      aria-label="Need a freelancer?"
-    >
-      <span className="text-[#25170D]">Need A Freelancer</span>
-      <IoMdHelp className="text-[#F54A00]" aria-hidden="true" />
-    </button>
+  >
+    <Link href="/free">
+      <button
+        type="button"
+        className="flex items-center gap-1 cursor-pointer"
+        aria-label="Need a freelancer?"
+      >
+        <span className="text-[#25170D]">Need A Freelancer</span>
+        <IoMdHelp className="text-[#F54A00]" aria-hidden="true" />
+      </button>
     </Link>
-<Link href="/hr"  >
-
-
-    <button
-      type="button"
-      className="flex items-center gap-1 cursor-pointer"
-      aria-label="Are you hiring?"
-    >
-      <span className="text-[#25170D]">Are You Hiring</span>
-      <IoMdHelp className="text-[#F54A00]" aria-hidden="true" />
-    </button>
-</Link>
+    <Link href="/hr">
+      <button
+        type="button"
+        className="flex items-center gap-1 cursor-pointer"
+        aria-label="Are you hiring?"
+      >
+        <span className="text-[#25170D]">Are You Hiring</span>
+        <IoMdHelp className="text-[#F54A00]" aria-hidden="true" />
+      </button>
+    </Link>
   </div>
 );
 
@@ -72,7 +72,14 @@ const Navbar: React.FC = () => {
   const mobileMenuRef = useRef<HTMLDivElement | null>(null);
   const tlRef = useRef<gsap.core.Timeline | null>(null);
 
+  // NEW: refs for mobile swap elements
+  const mobileWrapRef = useRef<HTMLDivElement | null>(null);
+  const hireRef = useRef<HTMLDivElement | null>(null);
+  const freeRef = useRef<HTMLDivElement | null>(null);
+  const toggleIntervalRef = useRef<number | null>(null);
+
   const [menuOpen, setMenuOpen] = useState(false);
+  const [showHiring, setShowHiring] = useState(true);
 
   useEffect(() => {
     const prefersReduced =
@@ -168,49 +175,95 @@ const Navbar: React.FC = () => {
     };
   }, []);
 
+  // GSAP-powered mobile toggle (every 2 seconds)
   useEffect(() => {
     const prefersReduced =
       typeof window !== "undefined" &&
       window.matchMedia &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    const menu = mobileMenuRef.current;
-    if (!menu) return;
+    const hireEl = hireRef.current;
+    const freeEl = freeRef.current;
+    if (!hireEl || !freeEl) return;
 
-    if (prefersReduced) {
-      menu.style.display = menuOpen ? "block" : "none";
-      return;
-    }
-
-    if (menuOpen) {
-      gsap.killTweensOf(menu);
-      gsap.set(menu, { display: "block" });
-      gsap.fromTo(
-        menu,
-        { y: -12, opacity: 0, filter: "blur(6px)" },
-        {
-          y: 0,
-          opacity: 1,
-          filter: "blur(0px)",
-          duration: 0.28,
-          ease: "power2.out",
-        }
-      );
+    // initial styles
+    gsap.set([hireEl, freeEl], { position: "absolute", left: 0, top: 0 });
+    if (showHiring) {
+      gsap.set(hireEl, { autoAlpha: 1, y: 0, pointerEvents: "auto" });
+      gsap.set(freeEl, { autoAlpha: 0, y: 6, pointerEvents: "none" });
     } else {
-      gsap.to(menu, {
-        y: -8,
-        opacity: 0,
-        filter: "blur(6px)",
-        duration: 0.22,
-        ease: "power2.in",
-        onComplete: () => {
-          if (mobileMenuRef.current)
-            mobileMenuRef.current.style.display = "none";
-        },
-      });
+      gsap.set(hireEl, { autoAlpha: 0, y: -6, pointerEvents: "none" });
+      gsap.set(freeEl, { autoAlpha: 1, y: 0, pointerEvents: "auto" });
     }
-  }, [menuOpen]);
 
+    // If reduced motion, don't animate — just toggle visibility every 2s
+    if (prefersReduced) {
+      toggleIntervalRef.current = window.setInterval(() => {
+        setShowHiring((s) => !s);
+      }, 2000);
+      return () => {
+        if (toggleIntervalRef.current) {
+          clearInterval(toggleIntervalRef.current);
+          toggleIntervalRef.current = null;
+        }
+      };
+    }
+
+    // animation function
+    const animateTo = (showHiringNow: boolean) => {
+      if (showHiringNow) {
+        // show hiring, hide free
+        gsap.killTweensOf([hireEl, freeEl]);
+        gsap.to(freeEl, {
+          autoAlpha: 0,
+          y: 6,
+          duration: 0.22,
+          ease: "power2.in",
+          pointerEvents: "none",
+        });
+        gsap.fromTo(
+          hireEl,
+          { autoAlpha: 0, y: -6 },
+          { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out", pointerEvents: "auto" }
+        );
+      } else {
+        // show free, hide hiring
+        gsap.killTweensOf([hireEl, freeEl]);
+        gsap.to(hireEl, {
+          autoAlpha: 0,
+          y: -6,
+          duration: 0.22,
+          ease: "power2.in",
+          pointerEvents: "none",
+        });
+        gsap.fromTo(
+          freeEl,
+          { autoAlpha: 0, y: 6 },
+          { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out", pointerEvents: "auto" }
+        );
+      }
+    };
+
+    // start interval
+    toggleIntervalRef.current = window.setInterval(() => {
+      setShowHiring((s) => {
+        const next = !s;
+        animateTo(!s);
+        return next;
+      });
+    }, 2000);
+
+    // cleanup
+    return () => {
+      if (toggleIntervalRef.current) {
+        clearInterval(toggleIntervalRef.current);
+        toggleIntervalRef.current = null;
+      }
+      gsap.killTweensOf([hireEl, freeEl]);
+    };
+  }, [/* run once on mount */]);
+
+  // keep escape/menu handling (unchanged)
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setMenuOpen(false);
@@ -244,30 +297,44 @@ const Navbar: React.FC = () => {
             <NavLinks />
           </div>
 
-          <div className=" md:hidden flex items-center gap-2">
-            {/* Mobile hamburger */}
-            <div className="md:hidden flex items-center">
-              <button
-                onClick={() => setMenuOpen((s) => !s)}
-                aria-controls="mobile-menu"
-                aria-expanded={menuOpen}
-                aria-label={menuOpen ? "Close menu" : "Open menu"}
-                className="p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2"
-              >
-                {menuOpen ? <FiX size={22} /> : <FiMenu size={22} />}
-              </button>
-            </div>
-          </div>
-        </div>
+          {/* --- mobile toggle block --- */}
+          <div className=" md:hidden flex items-center ">
+            <div
+              ref={mobileWrapRef}
+              className="relative w-[160px] h-[28px] flex-shrink-0"
+              aria-live="polite"
+            >
+              {/* Hiring link */}
+              <div ref={hireRef} className="w-full">
+                <Link href="/hr">
+                  <button
+                    type="button"
+                    className="flex items-center gap-1 cursor-pointer"
+                    aria-label="Are you hiring?"
+                  >
+                    <span className="text-[#25170D] underline">Are You Hiring</span>
+                    <IoMdHelp className="text-[#F54A00] " aria-hidden="true" />
+                  </button>
+                </Link>
+              </div>
 
-        {/* Mobile menu */}
-        <div
-          ref={mobileMenuRef}
-          id="mobile-menu"
-          className="md:hidden mt-3 p-4 bg-[#FFF4EC] border border-[#E6D9C9] rounded-2xl"
-          style={{ display: "none" }}
-        >
-          <NavLinks isMobile />
+              {/* Freelancer link */}
+              <div ref={freeRef} className="w-full">
+                <Link href="/free">
+                  <button
+                    type="button"
+                    className="flex items-center gap-1 cursor-pointer"
+                    aria-label="Need a freelancer?"
+                  >
+                    <span className="text-[#25170D] underline">Need A Freelancer</span>
+                    <IoMdHelp className="text-[#F54A00]" aria-hidden="true" />
+                  </button>
+                </Link>
+              </div>
+            </div>
+
+            <GoArrowRight className="" aria-hidden="true" />
+          </div>
         </div>
       </div>
     </nav>

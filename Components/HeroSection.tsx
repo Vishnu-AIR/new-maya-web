@@ -4,12 +4,15 @@ import gsap from "gsap";
 import Marqueue from "./Marqueue";
 import { Highlighter } from "./ui/highlighter";
 import { FaWhatsapp } from "react-icons/fa";
+import { GoArrowRight } from "react-icons/go";
+import { RiScrollToBottomLine } from "react-icons/ri";
 
 export default function HeroSection() {
   const containerRef = useRef<HTMLElement | null>(null);
   const headingRef = useRef<HTMLHeadingElement | null>(null);
   const marqRef = useRef<HTMLDivElement | null>(null);
   const bgCirclesRef = useRef<HTMLDivElement | null>(null);
+  const tryNowRef = useRef<HTMLButtonElement | null>(null); // <-- new ref
 
   function splitTextToWords(root: Node) {
     const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null);
@@ -148,6 +151,26 @@ export default function HeroSection() {
           "-=0.55"
         );
       }
+
+      // --- Try Now button entrance animation ---
+      const tryNowBtn = tryNowRef.current;
+      if (tryNowBtn) {
+        // start from off-bottom, scaled to 0, invisible
+        gsap.set(tryNowBtn, { y: 30, scale: 0, opacity: 0, transformOrigin: "50% 50%" });
+
+        // animate into view (blend into the existing timeline)
+        tl.to(
+          tryNowBtn,
+          {
+            y: 0,
+            scale: 1,
+            opacity: 1,
+            duration: 0.45,
+            ease: "back.out(1.4)",
+          },
+          "-=0.25" // overlap slightly with previous animations
+        );
+      }
     }, containerRef);
 
     return () => ctx.revert();
@@ -156,55 +179,68 @@ export default function HeroSection() {
   return (
     <section
       ref={containerRef}
-      className="relative min-h-[45vh] sm:min-h-[75vh] lg:min-h-[80vh] flex items-start justify-center overflow-hidden "
+      className="relative min-h-[60vh] sm:min-h-[75vh] lg:min-h-[80vh] flex items-start justify-center overflow-hidden "
     >
       <div
         ref={bgCirclesRef}
-        className="hidden lg:flex absolute inset-0 items-center justify-center pointer-events-none"
+        className="flex absolute inset-0 items-center justify-center pointer-events-none"
         aria-hidden="true"
       >
-        <div className="hero-circle absolute top-[-23%] rounded-full border-2 border-dashed border-[#25170D]/50 opacity-50 animate-pulse w-[220px] h-[220px] sm:w-[420px] sm:h-[420px] md:w-[700px] md:h-[700px] lg:w-[900px] lg:h-[900px] xl:w-[1300px] xl:h-[1300px]" />
-        <div className="hero-circle absolute top-[9%] rounded-full border-2 border-dashed border-[#25170D]/50 opacity-40 animate-pulse w-[180px] h-[180px] sm:w-[360px] sm:h-[360px] md:w-[600px] md:h-[600px] lg:w-[750px] lg:h-[750px] xl:w-[800px] xl:h-[800px]" />
-        <div className="hero-circle absolute top-[50%] rounded-full border-2 border-dashed border-[#25170D]/50 opacity-30 animate-pulse w-[110px] h-[110px] sm:w-60 sm:h-60 md:w-[420px] md:h-[420px] lg:w-[540px] lg:h-[540px] xl:w-[350px] xl:h-[350px]" />
+        <div className="hero-circle absolute lg:top-[-23%] rounded-full border-2 border-dashed border-[#25170D]/50 opacity-50 animate-pulse w-[600px] h-[600px] lg:w-[1300px] lg:h-[1300px]" />
+        <div className="hero-circle absolute lg:top-[9%] rounded-full border-2 border-dashed border-[#25170D]/50 opacity-40 animate-pulse w-[450px] h-[450px]  lg:w-[800px] lg:h-[800px]" />
+        <div className="hero-circle absolute lg:top-[50%] rounded-full border-2 border-dashed border-[#25170D]/50 opacity-30 animate-pulse w-[240px] h-[240px] lg:w-[350px] lg:h-[350px]" />
       </div>
 
       <div
         style={{ fontFamily: "DavidLibre" }}
-        className="relative z-10 w-full max-w-4xl mx-auto text-center pt-24 sm:pt-28 md:pt-32 lg:pt-32"
+        className="relative z-10 w-full max-w-4xl mx-auto text-center pt-24 sm:pt-28 md:pt-32 lg:pt-32 flex justify-center items-center flex-col gap-6 px-6 lg:px-0"
       >
         <style>{`.word{display:inline-block;will-change:transform,opacity,filter;backface-visibility:hidden;text-rendering:geometricPrecision}.space{display:inline-block;width:.45rem}`}</style>
 
         <h1
           ref={headingRef}
-          className="text-2xl sm:text-3xl md:text-5xl max-w-2xl mx-auto "
+          className="text-2xl sm:text-3xl md:text-5xl w-[7cm] lg:w-2xl mx-auto  "
         >
           <span>
             <Highlighter action="highlight" color="#FFE5C0">
               <span className="text-orange-600">Your Profile</span>
             </Highlighter>{" "}
           </span>{" "}
-          <span className="ml-1">pitched to</span>{" "}
+          <span className="">pitched to</span>{" "}
           <span className="text-orange-600">1000's</span> <span>of</span>
-          <br />
-          <span className="text-xl lg:text-[42px]">
-            Founders, HRs & Paying Clients
+
+          <span className="">
+            Founders, HRs <br className="block lg:hidden  " /> &  Paying Clients
           </span>
           <span className="flex justify-center items-center gap-2 w-full text-[#25170D]">
-            <br />
             <span>on</span>
             <span className="flex items-center font-medium text-green-600 text-xl lg:text-[42px] whatsapp-label">
               WhatsApp <FaWhatsapp className="lg:size-9  " />
             </span>
           </span>
         </h1>
+
+        <button
+          ref={tryNowRef} // <-- attach ref here
+          className=" lg:hidden flex justify-center items-center bg-orange-600 px-6 py-2 text-white rounded-full border border-black border-b-4"
+        >
+          Try Now <GoArrowRight />
+        </button>
       </div>
 
       <div
         ref={marqRef}
-        className="absolute top-[60%] lg:bottom-0 left-0 w-full flex flex-col justify-center items-center h-[3cm]"
+        className="absolute bottom-[10%]  left-0 w-full flex flex-col justify-center items-center h-[3cm]"
       >
         <h1 className="text-[#FF5100] font-semibold text-xl">I GOT YOU !!</h1>
         <Marqueue />
+      </div>
+
+      <div className="absolute bottom-0 left-0 w-full ">
+        <h1 className="text-center flex justify-center items-center gap-2 mb-4 text-[#25170D]/60 font-medium ">
+          Scroll To Explore
+          <RiScrollToBottomLine className="animate-bounce" />
+        </h1>
       </div>
     </section>
   );
