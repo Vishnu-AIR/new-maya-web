@@ -210,7 +210,7 @@ export default function HeroSection() {
 
         <h1
           ref={headingRef}
-          className="text-2xl sm:text-3xl md:text-5xl w-[7cm] lg:w-2xl mx-auto  "
+          className="text-3xl md:text-5xl w-[7cm] lg:w-2xl mx-auto  "
         >
           <span>
             <Highlighter action="highlight" color="#FFE5C0">
