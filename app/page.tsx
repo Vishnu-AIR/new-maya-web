@@ -6,7 +6,7 @@ import Video from "@/Components/Video";
 
 export default function page() {
   return (
-    <div className="bg-[#FFF4EC]  w-full overflow-hidden">
+    <div className="bg-[#FFF4EC] w-full h-full overflow-hidden">
       <Navbar />
       <HeroSection />
       <Need1000Section />

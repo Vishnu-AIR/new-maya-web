@@ -8,7 +8,7 @@ import FreeNew3 from './Components/FreeNew3'
 
 export default function page() {
   return (
-    <div className='bg-[#FFF4EC]'>
+    <div className='bg-[#FFF4EC] w-full h-full overflow-hidden'>
         <FreeLancerNavbar/>
         <FreeLancerHeroSection/>
         <FreeHowThisWork/>

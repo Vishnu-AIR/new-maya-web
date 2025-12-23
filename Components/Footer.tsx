@@ -2,7 +2,6 @@
 import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-
 import { GoArrowRight } from "react-icons/go";
 
 if (typeof window !== "undefined") {
@@ -59,10 +58,7 @@ export default function Footer() {
   }, []);
 
   return (
-    <div
-   
-      className="bg-[#DE9F33] w-full h-[40vh] relative flex justify-end items-end py-8 sm:py-0 "
-    >
+    <div className="bg-[#DE9F33] w-full h-[40vh] relative flex justify-end items-end py-8 sm:py-0 ">
       <img
         className="footer-mascot absolute bottom-0 left-0 sm:left-[10%] md:left-[12%] lg:left-[10%] w-36 lg:w-[190px] h-auto select-none pointer-events-none"
         src="/Images/maya2.png"
