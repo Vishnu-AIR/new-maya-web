@@ -13,6 +13,15 @@ const HRHeroSection: React.FC = () => {
   const socialRef = useRef<HTMLParagraphElement | null>(null);
   const audioRef = useRef<HTMLDivElement | null>(null);
 
+  const openWhatsApp = () => {
+    const phone = "919205812098";
+    const message = "hey maya";
+    const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+
+    if (typeof window !== "undefined") {
+      window.open(url, "_blank", "noopener,noreferrer");
+    }
+  };
   useEffect(() => {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
@@ -62,7 +71,8 @@ const HRHeroSection: React.FC = () => {
             style={{ fontFamily: "DavidLibre" }}
             className="text-4xl md:text-6xl text-[#8E8E8E] mt-10 mb-4 md:mb-8 tracking-wide font-extrabold"
           >
-            Too many CVs? <br className="lg:hidden" /> <span className="text-black ">Hand them to </span>
+            Too many CVs? <br className="lg:hidden" />{" "}
+            <span className="text-black ">Hand them to </span>
             <span className="text-[#F54A00]  ">Maya</span>
           </h1>
 
@@ -74,7 +84,8 @@ const HRHeroSection: React.FC = () => {
             <span className=" text-[#F54A00]">talks to 1000+ applicants</span>{" "}
             on your behalf
             <br className="hidden lg:block" />
-            &amp; sends profiles that fit in your <span className="text-black">budget + timeline + experience</span>
+            &amp; sends profiles that fit in your{" "}
+            <span className="text-black">budget + timeline + experience</span>
           </p>
 
           <div
@@ -82,6 +93,7 @@ const HRHeroSection: React.FC = () => {
             className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 mb-6"
           >
             <button
+              onClick={openWhatsApp}
               type="button"
               className="group px-6 py-2 rounded-full border border-b-4 border-black  bg-[#F54A00] hover:border-b-2 text-white font-medium flex items-center gap-2 transition-all duration-200 shadow-[0_2px_10px_rgba(255,107,53,0.12)]"
               aria-label="Try Maya now"

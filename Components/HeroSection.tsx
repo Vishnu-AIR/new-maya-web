@@ -190,21 +190,21 @@ export default function HeroSection() {
   return (
     <section
       ref={containerRef}
-      className="relative min-h-[60vh] sm:min-h-[75vh] lg:min-h-[80vh] flex items-start justify-center overflow-hidden "
+      className="relative h-[70vh]  lg:h-[80vh] flex items-start justify-center overflow-hidden "
     >
       <div
         ref={bgCirclesRef}
-        className="hidden lg:flex absolute inset-0 items-center justify-center pointer-events-none"
+        className="flex absolute inset-0 items-center justify-center pointer-events-none"
         aria-hidden="true"
       >
-        <div className="hero-circle absolute lg:top-[-23%] rounded-full border-2 border-dashed border-[#25170D]/50 opacity-50 animate-pulse w-[600px] h-[600px] lg:w-[1300px] lg:h-[1300px]" />
-        <div className="hero-circle absolute lg:top-[9%] rounded-full border-2 border-dashed border-[#25170D]/50 opacity-40 animate-pulse w-[450px] h-[450px]  lg:w-[800px] lg:h-[800px]" />
-        <div className="hero-circle absolute lg:top-[50%] rounded-full border-2 border-dashed border-[#25170D]/50 opacity-30 animate-pulse w-[240px] h-[240px] lg:w-[350px] lg:h-[350px]" />
+        <div className="hero-circle absolute lg:top-[-23%] rounded-full border-2 border-dashed border-[#25170D]/20   lg:border-[#25170D]/35 animate-pulse w-[600px] h-[600px] lg:w-[1300px] lg:h-[1300px]" />
+        <div className="hero-circle absolute lg:top-[9%] rounded-full border-2 border-dashed border-[#25170D]/15  lg:border-[#25170D]/25  animate-pulse w-[450px] h-[450px]  lg:w-[800px] lg:h-[800px]" />
+        <div className="hero-circle absolute lg:top-[50%] rounded-full border-2 border-dashed border-[#25170D]/10   lg:border-[#25170D]/20  animate-pulse w-[240px] h-[240px] lg:w-[350px] lg:h-[350px]" />
       </div>
 
       <div
         style={{ fontFamily: "DavidLibre" }}
-        className="relative z-10 w-full max-w-4xl mx-auto text-center pt-24 sm:pt-28 md:pt-32 lg:pt-32 flex justify-center items-center flex-col gap-6 px-6 lg:px-0"
+        className="relative z-10 w-full max-w-4xl mx-auto text-center pt-[3.5cm]  lg:pt-32 flex justify-center items-center flex-col gap-[1cm] px-6 lg:px-0"
       >
         
 
@@ -223,7 +223,7 @@ export default function HeroSection() {
         
            {" "} Founders, HR &  Paying Clients
         
-          <span className="flex justify-center items-center gap-2 w-full text-[#25170D]">
+          <span className="flex justify-center items-center gap-2 w-full text-[#25170D] ml-3 lg:ml-0">
             on
             <span className="flex items-center font-medium text-green-600  whatsapp-label">
               WhatsApp <FaWhatsapp className="lg:size-9  " />
@@ -235,7 +235,7 @@ export default function HeroSection() {
           ref={tryNowRef}
           onClick={openWhatsApp}
           aria-label="Open WhatsApp chat"
-          className=" lg:hidden flex justify-center items-center bg-orange-600 px-6 py-2 text-white rounded-full border border-black border-b-4"
+          className="text-xl lg:hidden flex justify-center items-center bg-orange-600 px-6 py-2 text-white rounded-full border border-black border-b-4"
         >
           Try Now <GoArrowRight />
         </button>
@@ -245,11 +245,11 @@ export default function HeroSection() {
         ref={marqRef}
         className="absolute bottom-[10%]  left-0 w-full flex flex-col justify-center items-center h-[3cm]"
       >
-        <h1 className="text-[#FF5100] font-semibold text-xl">I GOT YOU !!</h1>
+        <h1 className="text-[#FF5100] font-semibold text-sm lg:text-xl">I GOT YOU !!</h1>
         <Marqueue />
       </div>
 
-      <div className="absolute bottom-0 left-0 w-full ">
+      <div className="absolute bottom-0 left-0 w-full  ">
         <h1 className="text-center flex justify-center items-center gap-2 mb-4 text-[#25170D]/60 font-medium ">
           Scroll To Explore
           <RiScrollToBottomLine className="animate-bounce" />

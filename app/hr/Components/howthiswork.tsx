@@ -20,15 +20,18 @@ export default function HowThisWorks({}: {}) {
     const container = containerRef.current;
     if (!container) return;
 
-    // collect elements to animate (only those that exist)
     const targets: Element[] = [];
     if (headingRef.current) targets.push(headingRef.current);
     if (firstCardRef.current) targets.push(firstCardRef.current);
     if (arrowRef.current) targets.push(arrowRef.current);
     if (secondCardRef.current) targets.push(secondCardRef.current);
 
-    // set initial state to avoid flicker
-    gsap.set(targets, { y: 50, scale: 0, opacity: 0, transformOrigin: "center bottom" });
+    gsap.set(targets, {
+      y: 50,
+      scale: 0,
+      opacity: 0,
+      transformOrigin: "center bottom",
+    });
 
     const anim = gsap.to(targets, {
       y: 0,
@@ -39,14 +42,13 @@ export default function HowThisWorks({}: {}) {
       stagger: 0.12,
       scrollTrigger: {
         trigger: container,
-        start: "top 80%", // when the top of the container is 80% down the viewport
+        start: "top 80%",
         toggleActions: "play none none none",
-        once: true, // ensure animation runs only once when triggered
+        once: true,
       },
     });
 
     return () => {
-      // clean up the animation and its ScrollTrigger
       if ((anim as any).scrollTrigger) (anim as any).scrollTrigger.kill();
       anim.kill();
       ScrollTrigger.getAll().forEach((t) => t.kill());
@@ -54,7 +56,11 @@ export default function HowThisWorks({}: {}) {
   }, []);
 
   return (
-    <section  id="how-it-works" className="w-full flex justify-center lg:py-16 px-6 " aria-label="How Maya Works">
+    <section
+      id="how-it-works"
+      className="w-full flex justify-center lg:py-16 px-6 "
+      aria-label="How Maya Works"
+    >
       <div className="w-full max-w-4xl text-center" ref={containerRef}>
         <h2
           ref={headingRef}
@@ -68,9 +74,12 @@ export default function HowThisWorks({}: {}) {
 
         <div className="mt-[2cm] flex items-center justify-center w-full">
           <div className="flex items-center   ">
-            <div className=" justify-start items-start rounded-lg " ref={firstCardRef}>
+            <div
+              className=" justify-start items-start rounded-lg "
+              ref={firstCardRef}
+            >
               <h3 className="text-2xl lg:text-4xl text-center font-semibold text-[#151515]  ">
-                <span className="text-[#F54A00] italic"> Too many</span> CV’s, {" "}
+                <span className="text-[#F54A00] italic"> Too many</span> CV’s,{" "}
                 <br />
                 from different platforms ?
               </h3>
@@ -83,14 +92,24 @@ export default function HowThisWorks({}: {}) {
             </div>
           </div>
         </div>
-        <div className="lg:mt-[1cm] lg:mb-[1cm] w-full flex justify-center items-center" ref={arrowRef}>
-          <img className="h-[3cm] lg:h-[5cm]" src="/SVG/arrow.svg" alt="arrow" />
+        <div
+          className="lg:mt-[1cm] lg:mb-[1cm] w-full flex justify-center items-center"
+          ref={arrowRef}
+        >
+          <img
+            className="h-[3cm] lg:h-[5cm]"
+            src="/SVG/arrow.svg"
+            alt="arrow"
+          />
         </div>
 
         <div className="mt-6 flex items-center justify-center">
           <div className="w-full  max-w-[13cm]">
             <div className="flex items-center gap-6 md:gap-8">
-              <div className="flex justify-start items-start  rounded-lg  relative" ref={secondCardRef}>
+              <div
+                className="flex justify-start items-start  rounded-lg  relative"
+                ref={secondCardRef}
+              >
                 <img
                   className="w-[4cm] lg:w-[9cm] h-[4cm] lg:h-[6cm] object-contain border border-b-4 border-r-4 border-black bg-[#FFEFE3] rounded-lg"
                   src="/Images/maya2.png"

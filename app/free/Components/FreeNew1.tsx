@@ -1,41 +1,70 @@
-/**
- * Pixel‑perfect "How Maya Works" component built with TailwindCSS.
- * Replace the placeholder images in the <img> tags with your own assets
- * (e.g. put them in /public/images and use `/images/your-file.png`).
- *
- * Notes:
- * - Uses Tailwind utility classes for layout and spacing.
- * - Colors and spacing have been tuned to match the provided image.
- * - If you want exact font matching, add the font to your project and
- *   adjust the classNames accordingly.
- */
+"use client";
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-export default function FreeNew1({}: {
-  cvPileSrc?: string;
-  mayaAvatarSrc?: string;
-}) {
+if (typeof window !== "undefined") gsap.registerPlugin(ScrollTrigger);
+
+export default function FreeNew1() {
+  const containerRef = useRef<HTMLElement | null>(null);
+  const topBlockRef = useRef<HTMLDivElement | null>(null);
+  const arrowRef = useRef<HTMLImageElement | null>(null);
+  const bottomBlockRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const targets: Element[] = [];
+    if (topBlockRef.current) targets.push(topBlockRef.current);
+    if (arrowRef.current) targets.push(arrowRef.current);
+    if (bottomBlockRef.current) targets.push(bottomBlockRef.current);
+
+    if (targets.length === 0) return;
+
+    gsap.set(targets, { y: 60, scale: 0.95, opacity: 0, transformOrigin: "center bottom" });
+
+    const animation = gsap.to(targets, {
+      y: 0,
+      scale: 1,
+      opacity: 1,
+      duration: 0.7,
+      ease: "power3.out",
+      stagger: 0.12,
+      scrollTrigger: {
+        trigger: container,
+        start: "top 80%",
+        toggleActions: "play none none none",
+        once: true,
+      },
+    });
+
+    return () => {
+      try {
+        if ((animation as any).scrollTrigger) (animation as any).scrollTrigger.kill();
+      } catch (e) {
+        /* ignore */
+      }
+      animation.kill();
+      ScrollTrigger.getAll().forEach((t) => t.kill());
+    };
+  }, []);
+
   return (
-    <section className="w-full flex justify-center  ">
+    <section ref={containerRef} className="w-full flex justify-center  ">
       <div className="w-full max-w-4xl text-center">
-        {/* brush underline */}
-
-        <div className=" flex items-center justify-center">
+        {/* Top block */}
+        <div ref={topBlockRef} className=" flex items-center justify-center">
           <div className="flex items-center w-full lg:max-w-[18cm]  lg:ml-36">
             <div className="lg:flex justify-start items-start  rounded-lg w-full ">
-              <h3 className="text-2xl lg:text-4xl font-semibold text-[#151515] text-start w-[50%]  ml-16 lg:mx-0">
-                <h1 className="text-start  text-[#948E89] italic mt-8">
-                  then ,
-                </h1>
-                <h1
-                  className="mt-8  w-[8cm] lg:w-auto
-                "
+              <div className="text-2xl lg:text-4xl font-semibold text-[#151515] text-start w-[50%]  ml-16 lg:mx-0">
+                <div className="text-start  text-[#948E89] italic mt-8">then ,</div>
+                <div
+                  className="mt-8  w-[8cm] lg:w-auto"
                 >
-                  Maya will <span className="text-[#F54A00] italic">find</span>{" "}
-                  the right folks{" "}
-                  <span className="text-[#F54A00] italic">& talk</span> to them
-                  on your behalf
-                </h1>
-              </h3>
+                  Maya will <span className="text-[#F54A00] italic">find</span> the right folks <span className="text-[#F54A00] italic">& talk</span> to them on your behalf
+                </div>
+              </div>
 
               <div className="">
                 <img
@@ -47,20 +76,21 @@ export default function FreeNew1({}: {
             </div>
           </div>
         </div>
+
         <div className="mt-[1cm] w-full flex justify-center items-center">
-          <img src="/SVG/arrow.svg" alt="" />
+          <img ref={arrowRef} className="h-[3cm] lg:h-[5cm]" src="/SVG/arrow.svg" alt="" />
         </div>
 
         {/* Bottom block (avatar left + card right but reversed layout like image) */}
-        <div className=" flex items-center justify-center">
+        <div ref={bottomBlockRef} className=" flex items-center justify-center">
           <div className="flex items-center w-full lg:max-w-[19cm]  lg:ml-44">
             <div className="lg:flex justify-start items-start  rounded-lg w-full ">
-              <h3 className="text-2xl lg:text-4xl font-semibold text-[#151515] text-start w-[50%]  ml-16 lg:mx-0">
-                <h1 className="mt-20 w-[8cm] lg:w-auto">
+              <div className="text-2xl lg:text-4xl font-semibold text-[#151515] text-start w-[50%]  ml-16 lg:mx-0">
+                <div className="mt-20 w-[8cm] lg:w-auto">
                   <span className="text-[#F54A00] italic"> Confirms </span>
                   the budget, timeline, availability, past exp & intent
-                </h1>
-              </h3>
+                </div>
+              </div>
 
               <div className="">
                 <img

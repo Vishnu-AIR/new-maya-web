@@ -23,8 +23,12 @@ export default function New3() {
     if (headingRef.current) targets.push(headingRef.current);
     if (imgRef.current) targets.push(imgRef.current);
 
-    // initial state
-    gsap.set(targets, { y: 50, scale: 0, opacity: 0, transformOrigin: "center bottom" });
+    gsap.set(targets, {
+      y: 50,
+      scale: 0,
+      opacity: 0,
+      transformOrigin: "center bottom",
+    });
 
     const anim = gsap.to(targets, {
       y: 0,
@@ -49,19 +53,35 @@ export default function New3() {
   }, []);
 
   return (
-    <div id="faqs" className="w-full flex flex-col justify-center items-center lg:pb-20 lg:px-20" ref={containerRef} aria-label="New3-section">
-      <div className="lg:mt-[1cm] w-full flex justify-center items-center" ref={arrowRef}>
-       <img className="h-[3cm] lg:h-[5cm]" src="/SVG/arrow.svg" alt="" />
+    <div
+      id="faqs"
+      className="w-full flex flex-col justify-center items-center lg:pb-20 lg:px-20"
+      ref={containerRef}
+      aria-label="New3-section"
+    >
+      <div
+        className="lg:mt-[1cm] w-full flex justify-center items-center"
+        ref={arrowRef}
+      >
+        <img className="h-[3cm] lg:h-[5cm]" src="/SVG/arrow.svg" alt="" />
       </div>
-      <h1 className="text-2xl lg:text-4xl w-[12cm]  text-center  font-semibold mt-5 mb-5 " ref={headingRef}>
+      <h1
+        className="text-2xl lg:text-4xl w-[12cm]  text-center  font-semibold mt-5 mb-5 "
+        ref={headingRef}
+      >
         Sends to the perfect
         <br />
-<span className="text-[#F54A00] italic">        high intent</span> profiles only
+        <span className="text-[#F54A00] italic"> high intent</span> profiles
+        only
       </h1>
 
       <div>
-        <img className=" w-full  h-full" ref={imgRef} src="/Images/resume.png" alt="resume" />
-
+        <img
+          className=" w-full  h-full"
+          ref={imgRef}
+          src="/Images/resume.png"
+          alt="resume"
+        />
       </div>
     </div>
   );

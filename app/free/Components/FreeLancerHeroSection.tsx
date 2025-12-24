@@ -2,10 +2,8 @@
 
 import React, { useEffect, useRef } from "react";
 import { GoArrowRight } from "react-icons/go";
-import { IoMdHelp } from "react-icons/io";
 
 import gsap from "gsap";
-import HrMusic from "@/app/hr/Components/HrMusic";
 
 const FreeLancerHeroSection: React.FC = () => {
   const rootRef = useRef<HTMLDivElement | null>(null);
@@ -16,8 +14,16 @@ const FreeLancerHeroSection: React.FC = () => {
   const socialRef = useRef<HTMLParagraphElement | null>(null);
   const audioRef = useRef<HTMLDivElement | null>(null);
 
+  const openWhatsApp = () => {
+    const phone = "919205812098";
+    const message = "hey maya";
+    const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+
+    if (typeof window !== "undefined") {
+      window.open(url, "_blank", "noopener,noreferrer");
+    }
+  };
   useEffect(() => {
-    // GSAP context for safe scoping (works well in React 18 strict mode)
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
@@ -48,7 +54,6 @@ const FreeLancerHeroSection: React.FC = () => {
       className="h-[60vh] lg:h-[69vh] flex flex-col items-center justify-center relative overflow-hidden font-sans selection:bg-orange-300 px-4 md:px-8"
       aria-label="Maya hiring hero"
     >
-      {/* Card container */}
       <div className="relative z-10 w-full max-w-7xl">
         <div
           ref={cardRef}
@@ -82,18 +87,18 @@ const FreeLancerHeroSection: React.FC = () => {
             on your behalf You only get the ones who say yes to your scope +
             price, all in one chat!
           </p>
-        <div className="lg:hidden w-full flex justify-center items-center">
+          <div className="lg:hidden w-full flex justify-center items-center">
             <button
-            type="button"
-            className="group px-6 py-2 rounded-full border border-b-4 border-black bg-orange-600  hover:border-b-2 text-white font-medium flex items-center gap-2  transition-all duration-200 shadow-[0_2px_10px_rgba(255,107,53,0.12)]"
-            aria-label="Try Maya now"
-          >
-            Try Now
-            <span className="p-px rounded-md">
-              <GoArrowRight />
-            </span>
-          </button>
-        </div>
+              type="button"
+              className="group px-6 py-2 rounded-full border border-b-4 border-black bg-orange-600  hover:border-b-2 text-white font-medium flex items-center gap-2  transition-all duration-200 shadow-[0_2px_10px_rgba(255,107,53,0.12)]"
+              aria-label="Try Maya now"
+            >
+              Try Now
+              <span className="p-px rounded-md">
+                <GoArrowRight />
+              </span>
+            </button>
+          </div>
           <p className="block lg:hidden   text-gray-600 text-sm sm:text-lg mt-10">
             <span className="font-bold text-black">1000+</span> HRs &amp;
             founders are already using Maya
@@ -111,8 +116,9 @@ const FreeLancerHeroSection: React.FC = () => {
               className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 "
             >
               <button
+                onClick={openWhatsApp}
                 type="button"
-                className="group px-6 py-2 rounded-full border border-b-4 border-black bg-orange-600  hover:border-b-2 text-white font-medium flex items-center gap-2  transition-all duration-200 shadow-[0_2px_10px_rgba(255,107,53,0.12)]"
+                className="group px-6 py-2 rounded-full border border-b-4 border-black bg-orange-600  hover:border-b-2 text-white font-medium flex items-center gap-2  transition-all duration-200 cursor-pointer"
                 aria-label="Try Maya now"
               >
                 Try Now

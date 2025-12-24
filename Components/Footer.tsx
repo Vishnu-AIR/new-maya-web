@@ -3,6 +3,7 @@ import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { GoArrowRight } from "react-icons/go";
+import Link from "next/link";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -66,20 +67,26 @@ export default function Footer() {
       />
 
       <div className="absolute top-[7%]  lg:-top-[20%] left-[40%]  lg:left-[25%] flex flex-col justify-center items-start gap-3 sm:gap-4  lg:font-semibold ">
-        <button className="footer-animate flex items-center gap-1 lg:gap-3 py-2 px-2 lg:px-3 hover:scale-[1.03] bg-white text-black text-sm lg:text-lg rounded-xl transition-all  duration-300 hover:bg-gray-200 cursor-pointer">
-          <span className="truncate">Need A Freelancer</span>
-          <GoArrowRight className="-rotate-45 text-[#FF6900]" />
-        </button>
+        <Link href="/free">
+          <button className="footer-animate flex items-center gap-1 lg:gap-3 py-2 px-2 lg:px-3 hover:scale-[1.03] bg-white text-black text-sm lg:text-lg rounded-xl transition-all  duration-300 hover:bg-gray-200 cursor-pointer">
+            <span className="truncate">Need A Freelancer</span>
+            <GoArrowRight className="-rotate-45 text-[#FF6900]" />
+          </button>
+        </Link>
 
-        <button className="footer-animate flex items-center gap-1 lg:gap-3 py-2 px-2 lg:px-3 hover:scale-[1.03] bg-white text-black text-sm lg:text-lg rounded-xl transition-all duration-300 hover:bg-gray-200 cursor-pointer">
-          <span className="truncate">Want to hire</span>
-          <GoArrowRight className="-rotate-45 text-[#FF6900]" />
-        </button>
+        <Link href="/hr">
+          <button className="footer-animate flex items-center gap-1 lg:gap-3 py-2 px-2 lg:px-3 hover:scale-[1.03] bg-white text-black text-sm lg:text-lg rounded-xl transition-all duration-300 hover:bg-gray-200 cursor-pointer">
+            <span className="truncate">Want to hire</span>
+            <GoArrowRight className="-rotate-45 text-[#FF6900]" />
+          </button>
+        </Link>
 
-        <button className="footer-animate flex items-center gap-1 lg:gap-3 py-2 px-2 lg:px-3 hover:scale-[1.03] bg-white text-black text-sm lg:text-lg rounded-xl transition-all duration-300 hover:bg-gray-200 cursor-pointer">
-          <span className="truncate">Looking For Jobs And Gigs</span>
-          <GoArrowRight className="-rotate-45 text-[#FF6900]" />
-        </button>
+        <Link href="/">
+          <button className="footer-animate flex items-center gap-1 lg:gap-3 py-2 px-2 lg:px-3 hover:scale-[1.03] bg-white text-black text-sm lg:text-lg rounded-xl transition-all duration-300 hover:bg-gray-200 cursor-pointer">
+            <span className="truncate">Looking For Jobs And Gigs</span>
+            <GoArrowRight className="-rotate-45 text-[#FF6900]" />
+          </button>
+        </Link>
       </div>
 
       <div className="footer-animate flex flex-col justify-end items-end p-4 sm:p-5 text-xs sm:text-lg text-[#25170D]/80 font-semibold space-y-1 sm:space-y-2">
