@@ -7,7 +7,12 @@ import { FaWhatsapp } from "react-icons/fa";
 import { GoArrowRight } from "react-icons/go";
 import { RiScrollToBottomLine } from "react-icons/ri";
 
-export default function HeroSection() {
+interface HeroSectionProps {
+  loadingProgress?: number;
+  isLoading?: boolean;
+}
+
+export default function HeroSection({ loadingProgress = 0, isLoading = false }: HeroSectionProps) {
   const containerRef = useRef<HTMLElement | null>(null);
   const headingRef = useRef<HTMLHeadingElement | null>(null);
   const marqRef = useRef<HTMLDivElement | null>(null);
@@ -190,7 +195,9 @@ export default function HeroSection() {
   return (
     <section
       ref={containerRef}
-      className="relative h-[70vh]  lg:h-[80vh] flex items-start justify-center overflow-hidden "
+      className={`relative flex items-start justify-center overflow-hidden transition-all duration-500 ${
+        isLoading ? "h-screen" : "h-[70vh] lg:h-[80vh]"
+      }`}
     >
       <div
         ref={bgCirclesRef}
@@ -249,11 +256,17 @@ export default function HeroSection() {
         <Marqueue />
       </div>
 
-      <div className="absolute bottom-0 left-0 w-full  ">
-        <h1 className="text-center flex justify-center items-center gap-2 mb-4 text-[#25170D]/60 font-medium ">
-          Scroll To Explore
-          <RiScrollToBottomLine className="animate-bounce" />
-        </h1>
+      <div className="absolute bottom-0 left-0 w-full">
+        {isLoading ? (
+          <h1 className="text-center flex justify-center items-center gap-1 mb-4 text-[#25170D]/60 font-medium">
+            loading<span className="animate-pulse">...</span> {loadingProgress}%
+          </h1>
+        ) : (
+          <h1 className="text-center flex justify-center items-center gap-2 mb-4 text-[#25170D]/60 font-medium">
+            Scroll To Explore
+            <RiScrollToBottomLine className="animate-bounce" />
+          </h1>
+        )}
       </div>
     </section>
   );

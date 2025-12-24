@@ -12,7 +12,7 @@ if (typeof window !== "undefined") {
 
 export default function CTA() {
   const wrapperRef = useRef<HTMLDivElement | null>(null);
-  const [message, setMessage] = useState<string>("hey maya");
+  const [message, setMessage] = useState<string>("");
 
   useEffect(() => {
     const el = wrapperRef.current;

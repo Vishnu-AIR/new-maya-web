@@ -4,9 +4,12 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { IoMdHelp } from "react-icons/io";
+import { ArrowRight, X } from "lucide-react";
 
 import gsap from "gsap";
 import { GoArrowRight } from "react-icons/go";
+import { WordRotate } from "./ui/word-rotate";
+import { BiRightArrow } from "react-icons/bi";
 
 const UserProfile = () => (
   <Link
@@ -72,14 +75,7 @@ const Navbar: React.FC = () => {
   const mobileMenuRef = useRef<HTMLDivElement | null>(null);
   const tlRef = useRef<gsap.core.Timeline | null>(null);
 
-  // NEW: refs for mobile swap elements
-  const mobileWrapRef = useRef<HTMLDivElement | null>(null);
-  const hireRef = useRef<HTMLDivElement | null>(null);
-  const freeRef = useRef<HTMLDivElement | null>(null);
-  const toggleIntervalRef = useRef<number | null>(null);
-
   const [menuOpen, setMenuOpen] = useState(false);
-  const [showHiring, setShowHiring] = useState(true);
 
   useEffect(() => {
     const prefersReduced =
@@ -175,112 +171,7 @@ const Navbar: React.FC = () => {
     };
   }, []);
 
-  // GSAP-powered mobile toggle (every 2 seconds)
-  useEffect(
-    () => {
-      const prefersReduced =
-        typeof window !== "undefined" &&
-        window.matchMedia &&
-        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-      const hireEl = hireRef.current;
-      const freeEl = freeRef.current;
-      if (!hireEl || !freeEl) return;
-
-      // initial styles
-      gsap.set([hireEl, freeEl], { position: "absolute", left: 0, top: 0 });
-      if (showHiring) {
-        gsap.set(hireEl, { autoAlpha: 1, y: 0, pointerEvents: "auto" });
-        gsap.set(freeEl, { autoAlpha: 0, y: 6, pointerEvents: "none" });
-      } else {
-        gsap.set(hireEl, { autoAlpha: 0, y: -6, pointerEvents: "none" });
-        gsap.set(freeEl, { autoAlpha: 1, y: 0, pointerEvents: "auto" });
-      }
-
-      // If reduced motion, don't animate — just toggle visibility every 2s
-      if (prefersReduced) {
-        toggleIntervalRef.current = window.setInterval(() => {
-          setShowHiring((s) => !s);
-        }, 2000);
-        return () => {
-          if (toggleIntervalRef.current) {
-            clearInterval(toggleIntervalRef.current);
-            toggleIntervalRef.current = null;
-          }
-        };
-      }
-
-      // animation function
-      const animateTo = (showHiringNow: boolean) => {
-        if (showHiringNow) {
-          // show hiring, hide free
-          gsap.killTweensOf([hireEl, freeEl]);
-          gsap.to(freeEl, {
-            autoAlpha: 0,
-            y: 6,
-            duration: 0.22,
-            ease: "power2.in",
-            pointerEvents: "none",
-          });
-          gsap.fromTo(
-            hireEl,
-            { autoAlpha: 0, y: -6 },
-            {
-              autoAlpha: 1,
-              y: 0,
-              duration: 0.3,
-              ease: "power2.out",
-              pointerEvents: "auto",
-            }
-          );
-        } else {
-          // show free, hide hiring
-          gsap.killTweensOf([hireEl, freeEl]);
-          gsap.to(hireEl, {
-            autoAlpha: 0,
-            y: -6,
-            duration: 0.22,
-            ease: "power2.in",
-            pointerEvents: "none",
-          });
-          gsap.fromTo(
-            freeEl,
-            { autoAlpha: 0, y: 6 },
-            {
-              autoAlpha: 1,
-              y: 0,
-              duration: 0.3,
-              ease: "power2.out",
-              pointerEvents: "auto",
-            }
-          );
-        }
-      };
-
-      // start interval
-      toggleIntervalRef.current = window.setInterval(() => {
-        setShowHiring((s) => {
-          const next = !s;
-          animateTo(!s);
-          return next;
-        });
-      }, 2000);
-
-      // cleanup
-      return () => {
-        if (toggleIntervalRef.current) {
-          clearInterval(toggleIntervalRef.current);
-          toggleIntervalRef.current = null;
-        }
-        gsap.killTweensOf([hireEl, freeEl]);
-      };
-    },
-    [
-      /* run once on mount */
-    ]
-  );
-
-  // keep escape/menu handling (unchanged)
+  // Escape key and menu handling
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setMenuOpen(false);
@@ -296,69 +187,127 @@ const Navbar: React.FC = () => {
   }, [menuOpen]);
 
   return (
-    <nav className="w-full" role="navigation" aria-label="Main navigation">
-      <div className="max-w-xl mx-auto py-4 px-4 md:px-0">
-        <div
-          ref={containerRef}
-          className="  w-full  flex items-center justify-between p-2 bg-[#FFF4EC] border border-b-4 border-[#25170D] rounded-2xl relative"
-        >
-          <div ref={profileWrapRef} className="shrink-0">
-            <UserProfile />
-          </div>
+    <>
+      {/* Subtle overlay when menu is open */}
+      <div
+        className={`fixed inset-0 z-40 md:hidden transition-opacity duration-300 ${
+          menuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        }`}
+        onClick={() => setMenuOpen(false)}
+      >
+        <div className="absolute inset-0 bg-black/20" />
+      </div>
 
+      <nav className="w-full relative z-50" role="navigation" aria-label="Main navigation">
+        <div className="max-w-xl mx-auto py-4 px-4 md:px-0">
           <div
-            ref={linksWrapRef}
-            className="hidden md:flex md:items-end md:justify-end "
-            aria-hidden={menuOpen}
+            ref={containerRef}
+            className={`w-full bg-[#FFF4EC] border border-b-4 border-[#25170D] rounded-2xl relative transition-all duration-300 ${
+              menuOpen ? "p-4" : "p-2"
+            }`}
           >
-            <NavLinks />
-          </div>
-
-          {/* --- mobile toggle block --- */}
-          <div className=" md:hidden flex items-center ">
-            <div
-              ref={mobileWrapRef}
-              className="relative w-[160px] h-[28px] flex-shrink-0"
-              aria-live="polite"
-            >
-              {/* Hiring link */}
-              <div ref={hireRef} className="w-full">
-                <Link href="/hr">
-                  <button
-                    type="button"
-                    className="flex items-center gap-1 cursor-pointer"
-                    aria-label="Are you hiring?"
-                  >
-                    <span className="text-[#25170D] underline">
-                      Are You Hiring
-                    </span>
-                    <IoMdHelp className="text-[#F54A00] " aria-hidden="true" />
-                  </button>
-                </Link>
+            {/* Header row */}
+            <div className="flex items-center justify-between">
+              <div ref={profileWrapRef} className="shrink-0">
+                <UserProfile />
               </div>
 
-              {/* Freelancer link */}
-              <div ref={freeRef} className="w-full">
-                <Link href="/free">
-                  <button
-                    type="button"
-                    className="flex items-center gap-1 cursor-pointer"
-                    aria-label="Need a freelancer?"
-                  >
-                    <span className="text-[#25170D] underline">
-                      Need A Freelancer
+              <div
+                ref={linksWrapRef}
+                className="hidden md:flex md:items-end md:justify-end"
+                aria-hidden={menuOpen}
+              >
+                <NavLinks />
+              </div>
+
+              {/* Mobile menu trigger */}
+              <div className="md:hidden flex items-center">
+                <button
+                  onClick={() => setMenuOpen(!menuOpen)}
+                  className="flex items-center gap-1 cursor-pointer"
+                  aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
+                >
+                  {menuOpen ? (
+                    <span className="flex items-center gap-1 text-[#25170D] font-medium">
+                      Close <X size={18} className="text-[#F54A00]" />
                     </span>
-                    <IoMdHelp className="text-[#F54A00]" aria-hidden="true" />
+                  ) : (
+                    <>
+                      <WordRotate
+                        words={["Are You ", "Need A "]}
+                        duration={2000}
+                        className="text-[#25170D] text-base font-normal"
+                      />
+                      <WordRotate
+                        words={["Hiring?", "Freelancer?"]}
+                        duration={2000}
+                        className="text-[#F54A00] text-md font-normal"
+                      />
+                      <ArrowRight aria-hidden="true" size={18} className="mr-2" />
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
+
+            {/* Expanded menu content */}
+            <div
+              className={`md:hidden overflow-hidden transition-all duration-300 ease-out ${
+                menuOpen ? "opacity-100 mt-4" : "max-h-0 opacity-0 mt-0"
+              }`}
+            >
+              <div className="flex flex-col gap-4 mt-2">
+                {/* Button 1: Are You Hiring? */}
+                <Link href="/hr" onClick={() => setMenuOpen(false)}>
+                  <button
+                    className="w-full py-3 px-4 text-left font-medium border-2 border-[#25170D] rounded-lg hover:bg-[#25170D]/5 transition-all duration-200 flex items-center justify-between group"
+                    style={{ borderWidth: '1px 3px 4px 1px', transform: 'rotate(0deg)' }}
+                  >
+                    <span>
+                      Are You <span className="text-[#F54A00] font-semibold">Hiring?</span>
+                    </span>
+                    <ArrowRight
+                      size={18}
+                      className="text-[#F54A00] opacity-60 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-200"
+                    />
+                  </button>
+                </Link>
+
+                {/* Button 2: Need A Freelancer? */}
+                <Link href="/free" onClick={() => setMenuOpen(false)}>
+                  <button
+                    className="w-full py-3 px-4 text-left font-medium border-2 border-[#25170D] rounded-lg hover:bg-[#25170D]/5 transition-all duration-200 flex items-center justify-between group"
+                    style={{ borderWidth: '1px 3px 4px 1px', transform: 'rotate(0deg)' }}
+                  >
+                    <span>
+                      Need A <span className="text-[#F54A00] font-semibold">Freelancer?</span>
+                    </span>
+                    <ArrowRight
+                      size={18}
+                      className="text-[#F54A00] opacity-60 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-200"
+                    />
+                  </button>
+                </Link>
+
+                {/* Button 3: CTA - Try Now */}
+                <Link
+                  href="https://wa.me/919205812098?text=hey%20maya"
+                  target="_blank"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  <button
+                    className="w-full py-3 px-4 text-center rounded-full text-white font-semibold bg-[#F54A00] border-2 border-[#010101] hover:bg-[#FF6900] hover:border-[#FF6900] transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98]"
+                    style={{ borderWidth: '1px 1px 5px 1px', transform: 'rotate(0.0deg)' }}
+                  >
+                    Try Now <ArrowRight aria-hidden="true" size={20} className="inline-block -rotate-45" />
                   </button>
                 </Link>
               </div>
             </div>
-
-            <GoArrowRight className="" aria-hidden="true" />
           </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+    </>
   );
 };
 
