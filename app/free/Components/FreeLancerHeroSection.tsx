@@ -89,6 +89,7 @@ const FreeLancerHeroSection: React.FC = () => {
           </p>
           <div className="lg:hidden w-full flex justify-center items-center">
             <button
+              onClick={openWhatsApp}
               type="button"
               className="group px-6 py-2 rounded-full border border-b-4 border-black bg-orange-600  hover:border-b-2 text-white font-medium flex items-center gap-2  transition-all duration-200 shadow-[0_2px_10px_rgba(255,107,53,0.12)]"
               aria-label="Try Maya now"
