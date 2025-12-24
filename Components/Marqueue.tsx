@@ -42,7 +42,6 @@ export default function Marqueue() {
 
   return (
     <div className="w-full h-full flex relative">
-   
       <div className="left-parent w-[50%] overflow-hidden flex justify-center items-center">
         <div
           className="marquee-track left-track flex whitespace-nowrap items-center gap-8 will-change-transform text-[#25170D]"
@@ -79,7 +78,7 @@ export default function Marqueue() {
             {items.map((t, i) => (
               <span
                 key={`c-${i}`}
-                className="marquee-item px-3 py-1 text-xl font-medium"
+                className="marquee-item px-3 py-1  text-sm lg:text-xl font-medium"
               >
                 {t}
               </span>
@@ -109,13 +108,13 @@ export default function Marqueue() {
                   className="flex justify-center items-center gap-2 min-w-max"
                 >
                   <img
-                    className="w-10 h-10 rounded-full object-cover p-0.5 bg-orange-400"
+                    className="w-6 lg:w-10 h-6 lg:h-10 rounded-full object-cover p-0.5 bg-orange-400"
                     src={item.img}
                     alt={item.text}
                     width={20}
                     height={20}
                   />
-                  <span className="whitespace-nowrap text-orange-600 text-xl">
+                  <span className="whitespace-nowrap text-orange-600 text-sm lg:text-xl">
                     {item.text}
                   </span>
                 </span>

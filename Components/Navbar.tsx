@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { IoMdHelp } from "react-icons/io";
-import { FiMenu, FiX } from "react-icons/fi";
+
 import gsap from "gsap";
 import { GoArrowRight } from "react-icons/go";
 
@@ -176,92 +176,109 @@ const Navbar: React.FC = () => {
   }, []);
 
   // GSAP-powered mobile toggle (every 2 seconds)
-  useEffect(() => {
-    const prefersReduced =
-      typeof window !== "undefined" &&
-      window.matchMedia &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  useEffect(
+    () => {
+      const prefersReduced =
+        typeof window !== "undefined" &&
+        window.matchMedia &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    const hireEl = hireRef.current;
-    const freeEl = freeRef.current;
-    if (!hireEl || !freeEl) return;
+      const hireEl = hireRef.current;
+      const freeEl = freeRef.current;
+      if (!hireEl || !freeEl) return;
 
-    // initial styles
-    gsap.set([hireEl, freeEl], { position: "absolute", left: 0, top: 0 });
-    if (showHiring) {
-      gsap.set(hireEl, { autoAlpha: 1, y: 0, pointerEvents: "auto" });
-      gsap.set(freeEl, { autoAlpha: 0, y: 6, pointerEvents: "none" });
-    } else {
-      gsap.set(hireEl, { autoAlpha: 0, y: -6, pointerEvents: "none" });
-      gsap.set(freeEl, { autoAlpha: 1, y: 0, pointerEvents: "auto" });
-    }
+      // initial styles
+      gsap.set([hireEl, freeEl], { position: "absolute", left: 0, top: 0 });
+      if (showHiring) {
+        gsap.set(hireEl, { autoAlpha: 1, y: 0, pointerEvents: "auto" });
+        gsap.set(freeEl, { autoAlpha: 0, y: 6, pointerEvents: "none" });
+      } else {
+        gsap.set(hireEl, { autoAlpha: 0, y: -6, pointerEvents: "none" });
+        gsap.set(freeEl, { autoAlpha: 1, y: 0, pointerEvents: "auto" });
+      }
 
-    // If reduced motion, don't animate — just toggle visibility every 2s
-    if (prefersReduced) {
+      // If reduced motion, don't animate — just toggle visibility every 2s
+      if (prefersReduced) {
+        toggleIntervalRef.current = window.setInterval(() => {
+          setShowHiring((s) => !s);
+        }, 2000);
+        return () => {
+          if (toggleIntervalRef.current) {
+            clearInterval(toggleIntervalRef.current);
+            toggleIntervalRef.current = null;
+          }
+        };
+      }
+
+      // animation function
+      const animateTo = (showHiringNow: boolean) => {
+        if (showHiringNow) {
+          // show hiring, hide free
+          gsap.killTweensOf([hireEl, freeEl]);
+          gsap.to(freeEl, {
+            autoAlpha: 0,
+            y: 6,
+            duration: 0.22,
+            ease: "power2.in",
+            pointerEvents: "none",
+          });
+          gsap.fromTo(
+            hireEl,
+            { autoAlpha: 0, y: -6 },
+            {
+              autoAlpha: 1,
+              y: 0,
+              duration: 0.3,
+              ease: "power2.out",
+              pointerEvents: "auto",
+            }
+          );
+        } else {
+          // show free, hide hiring
+          gsap.killTweensOf([hireEl, freeEl]);
+          gsap.to(hireEl, {
+            autoAlpha: 0,
+            y: -6,
+            duration: 0.22,
+            ease: "power2.in",
+            pointerEvents: "none",
+          });
+          gsap.fromTo(
+            freeEl,
+            { autoAlpha: 0, y: 6 },
+            {
+              autoAlpha: 1,
+              y: 0,
+              duration: 0.3,
+              ease: "power2.out",
+              pointerEvents: "auto",
+            }
+          );
+        }
+      };
+
+      // start interval
       toggleIntervalRef.current = window.setInterval(() => {
-        setShowHiring((s) => !s);
+        setShowHiring((s) => {
+          const next = !s;
+          animateTo(!s);
+          return next;
+        });
       }, 2000);
+
+      // cleanup
       return () => {
         if (toggleIntervalRef.current) {
           clearInterval(toggleIntervalRef.current);
           toggleIntervalRef.current = null;
         }
+        gsap.killTweensOf([hireEl, freeEl]);
       };
-    }
-
-    // animation function
-    const animateTo = (showHiringNow: boolean) => {
-      if (showHiringNow) {
-        // show hiring, hide free
-        gsap.killTweensOf([hireEl, freeEl]);
-        gsap.to(freeEl, {
-          autoAlpha: 0,
-          y: 6,
-          duration: 0.22,
-          ease: "power2.in",
-          pointerEvents: "none",
-        });
-        gsap.fromTo(
-          hireEl,
-          { autoAlpha: 0, y: -6 },
-          { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out", pointerEvents: "auto" }
-        );
-      } else {
-        // show free, hide hiring
-        gsap.killTweensOf([hireEl, freeEl]);
-        gsap.to(hireEl, {
-          autoAlpha: 0,
-          y: -6,
-          duration: 0.22,
-          ease: "power2.in",
-          pointerEvents: "none",
-        });
-        gsap.fromTo(
-          freeEl,
-          { autoAlpha: 0, y: 6 },
-          { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out", pointerEvents: "auto" }
-        );
-      }
-    };
-
-    // start interval
-    toggleIntervalRef.current = window.setInterval(() => {
-      setShowHiring((s) => {
-        const next = !s;
-        animateTo(!s);
-        return next;
-      });
-    }, 2000);
-
-    // cleanup
-    return () => {
-      if (toggleIntervalRef.current) {
-        clearInterval(toggleIntervalRef.current);
-        toggleIntervalRef.current = null;
-      }
-      gsap.killTweensOf([hireEl, freeEl]);
-    };
-  }, [/* run once on mount */]);
+    },
+    [
+      /* run once on mount */
+    ]
+  );
 
   // keep escape/menu handling (unchanged)
   useEffect(() => {
@@ -312,7 +329,9 @@ const Navbar: React.FC = () => {
                     className="flex items-center gap-1 cursor-pointer"
                     aria-label="Are you hiring?"
                   >
-                    <span className="text-[#25170D] underline">Are You Hiring</span>
+                    <span className="text-[#25170D] underline">
+                      Are You Hiring
+                    </span>
                     <IoMdHelp className="text-[#F54A00] " aria-hidden="true" />
                   </button>
                 </Link>
@@ -326,7 +345,9 @@ const Navbar: React.FC = () => {
                     className="flex items-center gap-1 cursor-pointer"
                     aria-label="Need a freelancer?"
                   >
-                    <span className="text-[#25170D] underline">Need A Freelancer</span>
+                    <span className="text-[#25170D] underline">
+                      Need A Freelancer
+                    </span>
                     <IoMdHelp className="text-[#F54A00]" aria-hidden="true" />
                   </button>
                 </Link>

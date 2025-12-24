@@ -150,8 +150,8 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         {children}
-              <CTA />
-      <Footer />
+        <CTA />
+        <Footer />
       </body>
     </html>
   );

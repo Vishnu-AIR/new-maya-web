@@ -1,120 +1,174 @@
-"use client";
-import { useRef, useEffect } from "react";
-// Assuming you still want the GSAP animations from the original CTA
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import React, { useEffect, useRef } from "react";
+import { SlPaperClip } from "react-icons/sl";
+import { BsEmojiSmile } from "react-icons/bs";
+import { IoSend } from "react-icons/io5";
 
-// Icons needed for the input field
-import { SlPaperClip } from "react-icons/sl"; // For the paper clip icon
-import { BsEmojiSmile } from "react-icons/bs"; // For the smiley icon
-import { IoSend } from "react-icons/io5"; // For the send icon (using a solid version for the green button)
+type Props = {
+  /** Optional: WhatsApp number in international format without +, e.g. '919999999999' */
+  whatsappNumber?: string;
+  placeholder?: string;
+};
 
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
-
-export default function NewCTA() {
-  const wrapperRef = useRef<HTMLDivElement | null>(null);
-
-  // Re-using the animation logic from your original CTA component
-  useEffect(() => {
-    const el = wrapperRef.current;
-    if (!el) return;
-
-    const ctx = gsap.context(() => {
-      const items = gsap.utils.toArray<HTMLElement>(".cta-animate");
-
-      gsap.set(items, {
-        y: 60,
-        scale: 0.95,
-        opacity: 0,
-        filter: "blur(10px)",
-        willChange: "transform, opacity, filter",
-      });
-
-      gsap.to(items, {
-        y: 0,
-        scale: 1,
-        opacity: 1,
-        filter: "blur(0px)",
-        duration: 0.9,
-        ease: "power3.out",
-        stagger: 0.12,
-        scrollTrigger: {
-          trigger: el,
-          start: "top 80%",
-          toggleActions: "play none none none",
-        },
-      });
-    }, wrapperRef);
-
-    return () => ctx.revert();
-  }, []);
-
-  // --- Utility styles based on the image ---
-  // Background color from the image: a light, slightly peachy/tannish color (#FAEBD7 is close)
-  const containerBgColor = "#FAEBD7"; 
-  // Text color (dark brown/black): #362312 is close to the headline text
+export default function NewCTA({ whatsappNumber = "", placeholder = "Tell Maya what you are looking for..." }: Props) {
+  const containerBgColor = "#FAEBD7";
   const headlineColor = "#362312";
-  // WhatsApp green color: #25D366 (standard WhatsApp green)
   const whatsappGreen = "#25D366";
 
+  const revealRef = useRef<HTMLDivElement | null>(null);
+
+  // IntersectionObserver-based reveal (works across browsers and respects prefers-reduced-motion)
+  useEffect(() => {
+    const el = revealRef.current;
+    if (!el) return;
+
+    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      // If user prefers reduced motion, just reveal instantly
+      el.querySelectorAll(".reveal").forEach((c) => c.classList.add("is-visible"));
+      return;
+    }
+
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            obs.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12 }
+    );
+
+    el.querySelectorAll(".reveal").forEach((c) => obs.observe(c));
+
+    return () => obs.disconnect();
+  }, []);
+
+  const openWhatsApp = () => {
+    if (!whatsappNumber) return;
+    const encoded = encodeURIComponent(placeholder);
+    const url = `https://wa.me/${whatsappNumber}?text=${encoded}`;
+    window.open(url, "_blank", "noopener,noreferrer");
+  };
+
   return (
-    <section 
-      ref={wrapperRef} 
-      className="relative w-full overflow-hidden flex justify-center items-center py-20 md:py-32 min-h-[300px]"
+    <section
+      className="cta-section relative w-full overflow-hidden flex justify-center items-center"
       style={{ backgroundColor: containerBgColor }}
+      aria-labelledby="cta-heading"
     >
-      <div className="relative z-10 w-full max-w-xl mx-auto text-center px-4">
-        
-        {/* Headline Text */}
-        <h2
-          className="cta-animate text-3xl md:text-5xl font-serif leading-snug"
-          style={{ color: headlineColor, fontFamily: "serif" }} // Using generic serif as the specific font 'DavidLibre' might not be available
-        >
-          Just tell maya what you need
-          <br />
-          <span className="font-bold" style={{ color: whatsappGreen }}>
-            on WhatsApp
-          </span>
-        </h2>
-
-        {/* Input/CTA Container */}
-        <div className="cta-animate mt-10 flex justify-center items-center p-2">
-          <div className="relative flex items-center w-full max-w-lg h-14 bg-white rounded-full shadow-lg border border-gray-300">
-            
-            {/* Left Icons: Smiley */}
-            <div className="px-4 text-gray-500 text-xl flex items-center">
-              <BsEmojiSmile />
-            </div>
-
-            {/* Input Field */}
-            <input
-              type="text"
-              placeholder="Tell Maya what you are looking for..."
-              className="flex-grow h-full bg-transparent text-gray-700 placeholder-gray-500 focus:outline-none text-base"
-              aria-label="Search or message input"
-              readOnly // Assuming this is just a visual representation
-            />
-
-            {/* Right Icons: Paper Clip */}
-            <div className="px-4 text-gray-500 text-xl flex items-center">
-              <SlPaperClip />
-            </div>
-
-            {/* Send Button (Green Circle) - Note: Positioned outside the main input bar in the image */}
-          </div>
-          
-          {/* Send Button */}
-          <button
-            className="ml-2 w-14 h-14 rounded-full flex justify-center items-center shadow-lg transform active:scale-95 transition-transform duration-150"
-            style={{ backgroundColor: whatsappGreen }}
-            aria-label="Send message"
+      <div ref={revealRef} className="relative z-10 w-full max-w-5xl mx-auto px-4 py-12 sm:py-16 md:py-20 lg:py-28">
+        {/* content wrapper centers and gives responsive width */}
+        <div className="mx-auto max-w-3xl text-center">
+          {/* Headline */}
+          <h2
+            id="cta-heading"
+            className="reveal text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif leading-tight"
+            style={{ color: headlineColor }}
           >
-            <IoSend className="text-white text-2xl rotate-90" />
-          </button>
+            Just tell Maya what you need
+            <br />
+            <span className="font-bold" style={{ color: whatsappGreen }}>
+              on WhatsApp
+            </span>
+          </h2>
+
+          {/* Input / CTA: stacked on small screens, horizontal on md+ */}
+          <div className="reveal mt-6 sm:mt-8 flex flex-col md:flex-row items-stretch justify-center gap-3 md:gap-4">
+            <div className="flex-1">
+              <label htmlFor="maya-input" className="sr-only">
+                {placeholder}
+              </label>
+
+              <div className="relative w-full">
+                <div className="flex items-center w-full bg-white rounded-full shadow-sm border border-gray-200 h-12 sm:h-14 md:h-16 px-3 sm:px-4">
+                  <div className="flex items-center shrink-0 text-gray-500 text-lg sm:text-xl mr-3" aria-hidden>
+                    <BsEmojiSmile />
+                  </div>
+
+                  <input
+                    id="maya-input"
+                    type="text"
+                    readOnly
+                    aria-readonly
+                    placeholder={placeholder}
+                    className="flex-1 bg-transparent text-gray-700 placeholder-gray-400 focus:outline-none text-sm sm:text-base md:text-lg"
+                    // keep readOnly so designers can control behaviour externally; remove if you want it actually editable
+                  />
+
+                  <button
+                    type="button"
+                    className="ml-3 shrink-0 p-2 rounded-full hover:bg-gray-100 active:scale-95 transition-transform"
+                    aria-label="Attach file"
+                    title="Attach"
+                  >
+                    <SlPaperClip className="text-gray-500 text-lg sm:text-xl" />
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Send button: full width on small screens, circular icon on medium+ */}
+            <div className="flex-shrink-0 w-full md:w-auto">
+              {/* On small screens show a full-width action button for easier tapping */}
+              <button
+                onClick={openWhatsApp}
+                className="w-full md:w-14 h-12 sm:h-14 md:h-14 rounded-full flex items-center justify-center shadow-md active:scale-95 transition-transform focus:outline-none focus:ring-2 focus:ring-offset-2"
+                style={{ backgroundColor: whatsappGreen }}
+                aria-label={whatsappNumber ? "Send via WhatsApp" : "Send"}
+                title={whatsappNumber ? "Open WhatsApp chat" : "Send"}
+              >
+                {/* On narrow screens, show label + icon; on md+ only icon */}
+                <span className="hidden md:inline-block sr-only">Send</span>
+                <IoSend className="text-white text-lg sm:text-2xl md:text-2xl rotate-90" aria-hidden />
+              </button>
+            </div>
+          </div>
+
+          {/* small helper text */}
+          <p className="reveal mt-3 text-xs sm:text-sm text-gray-600">
+            Quick, personal help — reply on WhatsApp for faster back-and-forth.
+          </p>
         </div>
       </div>
+
+      {/* Scoped styles for the reveal animation and responsive tweaks */}
+      <style jsx>{`
+        /* Reveal animations (CSS driven, triggered by JS observer) */
+        .reveal {
+          opacity: 0;
+          transform: translateY(24px) scale(0.995);
+          filter: blur(6px);
+          transition: opacity 520ms cubic-bezier(0.22, 1, 0.36, 1),
+            transform 520ms cubic-bezier(0.22, 1, 0.36, 1),
+            filter 520ms ease;
+        }
+
+        .reveal.is-visible {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+          filter: blur(0);
+        }
+
+        /* Respect reduced motion preference */
+        @media (prefers-reduced-motion: reduce) {
+          .reveal,
+          .reveal.is-visible {
+            transition: none !important;
+            transform: none !important;
+            opacity: 1 !important;
+            filter: none !important;
+          }
+        }
+
+        /* Slight layout refinement on very small screens */
+        @media (max-width: 420px) {
+          .cta-section {
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+          }
+        }
+      `}</style>
     </section>
   );
 }

@@ -2,7 +2,7 @@ export default function VoiceWaveButton() {
   return (
     <>
       <button
-        className="flex items-center justify-center  w-[3.3cm] h-14 rounded-full border-4 cursor-pointer transition-transform duration-200 hover:scale-[1.04]"
+        className="flex items-center justify-center w-[2.5cm] lg:w-[3.3cm] h-10 lg:h-14 rounded-full border-2 lg:border-4 cursor-pointer transition-transform duration-200 hover:scale-[1.04]"
         aria-label="Voice wave"
         style={{
           background: "#ffd7c8",

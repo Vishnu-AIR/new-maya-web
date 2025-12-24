@@ -2,7 +2,7 @@
 import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { FaWhatsapp } from "react-icons/fa";
+
 import { IoMdHelp } from "react-icons/io";
 import WhatsAppChatPhone from "./Phone";
 import { Highlighter } from "./ui/highlighter";
@@ -72,12 +72,8 @@ export default function Need1000Section() {
                 <div className="animate-in text-2xl lg:text-3xl">
                   <span style={{ fontFamily: "DavidLibre" }}>
                     <span className=""> Of</span>
-                    <span className=" lg:text-4xl ml-2 text-white bg-[#4E2D00] ">
-                      <span className="">
-                        <Highlighter action="highlight" color="#4e2D00">
-                          HRs, Founders & Paying Clients
-                        </Highlighter>{" "}
-                      </span>
+                    <span className=" lg:text-4xl ml-2 text-white ">
+                      <span className="">HRs, Founders & Paying Clients</span>
                     </span>
 
                     <span className=" lg:text-4xl leading-relaxed max-w-[44ch] text-white animate-in">
@@ -88,7 +84,7 @@ export default function Need1000Section() {
 
                   <div className="flex  gap-3 sm:gap-4 mt-6 animate-in">
                     <Link href="/free">
-                      <button className=" lg:w-[6cm] w-auto p-2  gap-2 lg:px-5 lg:py-3 hover:scale-[1.03] transition-all text-white text-sm lg:text-lg rounded-full border  border-gray-300 flex justify-center items-center cursor-pointer">
+                      <button className=" lg:w-[6cm] w-auto p-3  gap-2 lg:px-5 lg:py-3 hover:scale-[1.03] transition-all text-white text-sm lg:text-lg rounded-full border  border-gray-300 flex justify-center items-center cursor-pointer">
                         <span>Need A Freelancer</span>
                         <IoMdHelp
                           className="text-[#F54A00]"
@@ -97,7 +93,7 @@ export default function Need1000Section() {
                       </button>
                     </Link>
                     <Link href="/hr">
-                      <button className="  lg:w-[6cm] w-auto p-2  gap-2 lg:px-5 lg:py-3 hover:scale-[1.03] transition-all text-white text-sm lg:text-lg rounded-full border  border-gray-300 flex justify-center items-center cursor-pointer">
+                      <button className="  lg:w-[6cm] w-auto p-3  gap-2 lg:px-5 lg:py-3 hover:scale-[1.03] transition-all text-white text-sm lg:text-lg rounded-full border  border-gray-300 flex justify-center items-center cursor-pointer">
                         <span>Are You Hiring</span>
                         <IoMdHelp
                           className="text-[#F54A00]"

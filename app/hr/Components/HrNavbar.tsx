@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { IoMdHelp } from "react-icons/io";
 import { FiMenu, FiX } from "react-icons/fi";
-import gsap from "gsap";
 
 type NavLinksProps = { isMobile?: boolean; onNavigate?: () => void };
 
@@ -86,146 +85,17 @@ const HrNavbar: React.FC = () => {
   const linksWrapRef = useRef<HTMLDivElement | null>(null);
   const ctaWrapRef = useRef<HTMLDivElement | null>(null);
   const mobileMenuRef = useRef<HTMLDivElement | null>(null);
-  const tlRef = useRef<gsap.core.Timeline | null>(null);
 
   const [menuOpen, setMenuOpen] = useState(false);
 
+  // Keep mobile menu display in sync with state (no animations)
   useEffect(() => {
-    const prefersReduced =
-      typeof window !== "undefined" &&
-      window.matchMedia &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    const container = containerRef.current;
-    const profileEl = profileWrapRef.current;
-    const linksEl = linksWrapRef.current;
-    const ctaEl = ctaWrapRef.current;
-
-    if (!container || !profileEl || !linksEl || !ctaEl) return;
-
-    if (prefersReduced) {
-      container.style.opacity = "1";
-      container.style.transform = "translateY(0px)";
-      container.style.filter = "blur(0px)";
-      profileEl.style.opacity = "1";
-      linksEl.style.opacity = "1";
-      ctaEl.style.opacity = "1";
-      return;
-    }
-
-    gsap.set([container, profileEl, linksEl, ctaEl], {
-      clearProps: "none",
-      willChange: "transform, opacity, filter",
-    });
-
-    tlRef.current = gsap.timeline();
-
-    tlRef.current.fromTo(
-      container,
-      { y: -100, opacity: 0, filter: "blur(18px)" },
-      {
-        y: 0,
-        opacity: 1,
-        filter: "blur(0px)",
-        duration: 0.9,
-        ease: "power3.out",
-      }
-    );
-
-    tlRef.current.fromTo(
-      profileEl,
-      { x: -18, y: -6, opacity: 0, filter: "blur(10px)" },
-      {
-        x: 0,
-        y: 0,
-        opacity: 1,
-        filter: "blur(0px)",
-        duration: 0.6,
-        ease: "power2.out",
-      },
-      "<0.06"
-    );
-
-    const linkChildren = Array.from(linksEl.children) as HTMLElement[];
-    tlRef.current.fromTo(
-      linkChildren,
-      { y: -28, opacity: 0, filter: "blur(8px)" },
-      {
-        y: 0,
-        opacity: 1,
-        filter: "blur(0px)",
-        duration: 0.55,
-        stagger: 0.08,
-        ease: "power2.out",
-      },
-      "<0.08"
-    );
-
-    tlRef.current.fromTo(
-      ctaEl,
-      { scale: 0.96, opacity: 0, filter: "blur(6px)" },
-      {
-        scale: 1,
-        opacity: 1,
-        filter: "blur(0px)",
-        duration: 0.7,
-        ease: "back.out(1.1)",
-      },
-      "<0.06"
-    );
-
-    return () => {
-      if (tlRef.current) {
-        tlRef.current.kill();
-        tlRef.current = null;
-      }
-      gsap.killTweensOf([container, profileEl, linksEl, ctaEl]);
-      gsap.set([container, profileEl, linksEl, ctaEl], { willChange: "" });
-    };
-  }, []);
-
-  useEffect(() => {
-    const prefersReduced =
-      typeof window !== "undefined" &&
-      window.matchMedia &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
     const menu = mobileMenuRef.current;
     if (!menu) return;
-
-    if (prefersReduced) {
-      menu.style.display = menuOpen ? "block" : "none";
-      return;
-    }
-
-    if (menuOpen) {
-      gsap.killTweensOf(menu);
-      gsap.set(menu, { display: "block" });
-      gsap.fromTo(
-        menu,
-        { y: -12, opacity: 0, filter: "blur(6px)" },
-        {
-          y: 0,
-          opacity: 1,
-          filter: "blur(0px)",
-          duration: 0.28,
-          ease: "power2.out",
-        }
-      );
-    } else {
-      gsap.to(menu, {
-        y: -8,
-        opacity: 0,
-        filter: "blur(6px)",
-        duration: 0.22,
-        ease: "power2.in",
-        onComplete: () => {
-          if (mobileMenuRef.current) mobileMenuRef.current.style.display = "none";
-        },
-      });
-    }
+    menu.style.display = menuOpen ? "block" : "none";
   }, [menuOpen]);
 
+  // Keyboard handler (Escape) and body overflow toggle when mobile menu is open
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setMenuOpen(false);

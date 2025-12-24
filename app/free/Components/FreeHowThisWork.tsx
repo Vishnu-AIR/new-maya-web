@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Highlighter } from "@/Components/ui/highlighter";
 
+
 if (typeof window !== "undefined") gsap.registerPlugin(ScrollTrigger);
 
 export default function FreeHowThisWork() {
@@ -18,6 +19,7 @@ export default function FreeHowThisWork() {
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
+
 
     const targets: (Element | null)[] = [
       headingRef.current,
@@ -44,7 +46,7 @@ export default function FreeHowThisWork() {
       stagger: 0.12,
       scrollTrigger: {
         trigger: container,
-        start: "top 80%",
+        start: "top 80%", 
         toggleActions: "play none none none",
         once: true,
       },
