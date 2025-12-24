@@ -4,7 +4,7 @@ import HrNavbar from "./Components/HrNavbar";
 
 import FlowDiagramSection from "./Components/New1";
 import New3 from "./New3";
-import NewCTA from "./NewCTA";
+
 
 export default function page() {
   return (

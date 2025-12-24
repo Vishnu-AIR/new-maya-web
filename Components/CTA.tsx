@@ -2,8 +2,6 @@
 import { useRef, useEffect, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-import { GoArrowRight } from "react-icons/go";
 import { SlPaperClip } from "react-icons/sl";
 import { BsEmojiSmile } from "react-icons/bs";
 import { IoSend } from "react-icons/io5";
@@ -63,17 +61,14 @@ export default function CTA() {
   }, []);
 
   const handleSend = () => {
-    // Use country code +91 for India. If this should be different, replace the prefix.
     const rawNumber = "9205812098";
-    const phone = `91${rawNumber}`; // -> "919205812098"
+    const phone = `91${rawNumber}`;
     const text = (message || "hey maya").trim() || "hey maya";
     const url = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
 
-    // Open WhatsApp chat in new tab/window
     try {
       window.open(url, "_blank");
     } catch (err) {
-      // fallback
       window.location.href = url;
     }
   };
@@ -95,19 +90,15 @@ export default function CTA() {
           className="cta-animate text-4xl lg:text-6xl text-[#25170D] leading-tight font-semibold lg:w-[20cm] mx-auto"
         >
           Just tell maya what you need
-         
           <span className="text-green-500"> On WhatsApp</span>
         </h2>
 
-        {/* Input/CTA Container */}
         <div className="cta-animate mt-10 flex justify-center items-center p-2">
-          <div className="relative flex items-center w-full max-w-lg h-14 bg-white rounded-full border border-b-4 hover:border-b border-black">
-            {/* Left Icons: Smiley */}
+          <div className="relative flex items-center w-[8cm] lg:w-lg h-14 bg-white rounded-full border border-b-4 hover:border-b border-black">
             <div className="px-4 text-gray-500 text-xl flex items-center">
               <BsEmojiSmile />
             </div>
 
-            {/* Input Field */}
             <input
               type="text"
               value={message}
@@ -117,16 +108,14 @@ export default function CTA() {
               aria-label="Message to Maya"
             />
 
-            {/* Right Icons: Paper Clip */}
             <div className="px-4 text-gray-500 text-xl flex items-center">
               <SlPaperClip />
             </div>
           </div>
 
-          {/* Send Button */}
           <button
             onClick={handleSend}
-            className="ml-2 w-14 h-14 rounded-full flex justify-center items-center shadow-lg transform active:scale-95 transition-transform duration-150 bg-[#1CAB5F] border border-b-4 border-r-2 hover:border-b border-black"
+            className="ml-2 px-4 py-4 lg:w-14 lg:h-14 rounded-full flex justify-center items-center shadow-lg transform active:scale-95 transition-transform duration-150 bg-[#1CAB5F] border border-b-4 border-r-2 hover:border-b border-black"
             aria-label="Send message to WhatsApp"
             title="Send via WhatsApp"
           >
