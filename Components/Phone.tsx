@@ -236,10 +236,10 @@ const Phone: React.FC = () => {
 
   return (
     <div className="rounded-4xl flex items-center justify-center">
-      <div className="relative mx-auto border-neutral-800 border-6 bg-white rounded-3xl h-[700px] w-[350px] shadow-xl">
-        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-[100px] h-[30px] bg-neutral-800 rounded-b-2xl z-20" />
+      <div className="relative mx-auto border-neutral-800 border-6 bg-white rounded-[50px] h-[700px] w-[350px] shadow-xl overflow-clip">
+        <div className="absolute top-1 left-1/2 transform -translate-x-1/2 w-[100px] h-[28px] bg-neutral-900 rounded-2xl z-20" />
 
-        <div className="h-full w-full bg-[#E4DCD3] rounded-3xl overflow-hidden flex flex-col relative">
+        <div className="h-full w-full bg-[#E4DCD3]/10 rounded-3xl overflow-hidden flex flex-col relative">
           <div className="h-8 bg-white flex items-center justify-between px-6 z-10 text-black">
             <span className="text-sm font-semibold ml-2">9:41</span>
             <div className="flex gap-1.5 items-center mr-1">
@@ -254,7 +254,7 @@ const Phone: React.FC = () => {
             <div className="flex items-center gap-3">
               <div className="relative">
                 <img
-                  src="https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671142.jpg"
+                  src="/avtar2.jpg"
                   alt="Maya"
                   className="w-10 h-10 rounded-full object-cover border border-gray-200"
                 />
