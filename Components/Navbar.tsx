@@ -15,7 +15,7 @@ const UserProfile = () => (
   >
     <div className="w-12 h-12 relative overflow-hidden rounded-full">
       <Image
-        src="/Images/maya.png"
+        src="/images/maya.png"
         alt="Description of the image"
         width={48}
         height={48}

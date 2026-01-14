@@ -397,7 +397,7 @@ const AnimatedChat: React.FC = () => {
               <div className="flex items-center space-x-3">
                 <ChevronLeft />
                 <img
-                  src="/avtar2.png"
+                  src="/avtar2.jpg"
                   alt="Maya's Avatar"
                   className="w-10 h-10 rounded-full"
                 />

@@ -19,13 +19,13 @@ const inter = Inter({
 });
 
 const SITE_URL = "https://your-domain.com"; // <- replace with your real domain
-const SITE_NAME = "Maya AI";
-const DEFAULT_IMAGE = `${SITE_URL}/og-image.png`; // <- replace with your MayaImage
+const SITE_NAME = "Maya";
+const DEFAULT_IMAGE = `${SITE_URL}/avtar2.png`; // <- replace with your MayaImage
 const AUTHOR_NAME = "Meshly Technologies Pvt. Ltd.";
 
 export const metadata: Metadata = {
   title: {
-    default: `${SITE_NAME} — Your Profile, pitched to thousands of Founders & HRs`,
+    default: `${SITE_NAME} — A super AI that brings you opportunities`,
     template: "%s | Maya AI",
   },
   description:

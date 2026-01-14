@@ -8,7 +8,7 @@ import Navbar from "@/Components/Navbar";
 import Need1000Section from "@/Components/Need1000Section";
 import Video from "@/Components/Video";
 
-const ASSETS_TO_PRELOAD = ["/her0.png", "/black.png", "/avtar2.png"];
+const ASSETS_TO_PRELOAD = ["/her0.png", "/black.png", "/avtar2.jpg"];
 
 interface WindowWithAudio extends Window {
   webkitAudioContext?: typeof AudioContext;
